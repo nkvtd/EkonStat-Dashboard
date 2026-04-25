@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev": "vike dev",
+    "build": "vike build",
+    "preview": "vike build && vike preview",
+    "lint": "biome lint --write .",
+    "format": "biome format --write .",
+    "deploy": "vike build && wrangler deploy",
+    "generate-types": "wrangler types"
+  },
+  "dependencies": {
+    "vike": "0.4.257",
+    "vike-vue": "^0.9.11",
+    "vue": "^3.5.32"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.11",
+    "@cloudflare/vite-plugin": "^1.31.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8",
+    "wrangler": "^4.81.1"
+  },
+  "type": "module"
+}

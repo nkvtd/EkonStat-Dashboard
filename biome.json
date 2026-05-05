@@ -1,60 +1,60 @@
 {
-  "css": {
-    "parser": {
-      "tailwindDirectives": true
-    }
-  },
-  "overrides": [
-    {
-      "includes": [
-        "**/*.css"
-      ],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noUnknownAtRules": "off"
-          }
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
         }
-      }
-    }
-  ],
-  "files": {
-    "includes": [
-      "**",
-      "!*.cjs",
-      "!*.js",
-      "!*.mjs",
-      "!*.spec.ts",
-      "!**/*.ts.build-*.mjs",
-      "!dist/*",
-      "!node_modules/*",
-      "!**/.DS_Store",
-      "!worker-configuration.d.ts"
-    ]
-  },
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "formatter": {
-    "indentStyle": "space"
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "style": {
-        "useConst": "off",
-        "useImportType": "off"
-      },
-      "correctness": {
-        "noUnusedVariables": "off",
-        "noUnusedImports": "off"
-      }
     },
-    "domains": {
-      "vue": "recommended"
+    "overrides": [
+        {
+            "includes": ["**/*.css"],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noUnknownAtRules": "off"
+                    }
+                }
+            }
+        }
+    ],
+    "files": {
+        "includes": [
+            "**",
+            "!*.cjs",
+            "!*.js",
+            "!*.mjs",
+            "!*.spec.ts",
+            "!**/*.ts.build-*.mjs",
+            "!dist/*",
+            "!node_modules/*",
+            "!**/.DS_Store",
+            "!worker-configuration.d.ts"
+        ]
+    },
+    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "style": {
+                "useConst": "off",
+                "useImportType": "off"
+            },
+            "correctness": {
+                "noUnusedVariables": "off",
+                "noUnusedImports": "off"
+            }
+        },
+        "domains": {
+            "vue": "recommended"
+        }
+    },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
     }
-  },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  }
 }

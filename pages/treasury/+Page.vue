@@ -1,19 +1,6 @@
-<script lang="ts" setup>
-import { usePageContext } from "vike-vue/usePageContext";
+<script setup lang="ts">
 import AppFooter from "../../components/AppFooter.vue";
 import Logo from "../../components/Logo.vue";
-
-const pageContext = usePageContext();
-
-let { is404, abortReason } = pageContext;
-
-if (!abortReason) {
-    abortReason = is404
-        ? "Бараната страна не беше пронајдена"
-        : "Настана неочекувана грешка";
-}
-
-const heading = is404 ? "Страната не е пронајдена" : "Неочекувана грешка";
 </script>
 
 <template>
@@ -23,11 +10,11 @@ const heading = is404 ? "Страната не е пронајдена" : "Не�
         <Logo class="h-44 w-44 sm:h-55 sm:w-55" />
 
         <h1 class="mt-8 text-3xl font-bold leading-tight text-content sm:text-4xl">
-          {{ heading }}
+          Делот за трезор сѐ уште не е достапна
         </h1>
 
         <p class="mt-3 text-sm leading-6 text-accent sm:text-base">
-          {{ abortReason }}
+          Оваа страна е во изработка и моментално нема достапна содржина
         </p>
       </div>
     </div>

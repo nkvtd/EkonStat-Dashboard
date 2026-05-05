@@ -1,18 +1,12 @@
 import type { Config } from "vike/types";
 import vikeVue from "vike-vue/config";
 
-// Default config (can be overridden by pages)
-// https://vike.dev/config
-
 const config: Config = {
-  // https://vike.dev/head-tags
-  title: "My Vike App",
-  description: "Demo showcasing Vike",
+    ssr: false,
+    title: "EkonStat-Dashboard",
+    description: "Tool for visualising economic statistics",
 
-  extends: [vikeVue],
-
-  // https://vike.dev/server
-  server: true,
+    extends: [vikeVue]
 };
 
 export default config;

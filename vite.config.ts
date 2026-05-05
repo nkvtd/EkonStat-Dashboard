@@ -1,20 +1,22 @@
-import { cloudflare } from "@cloudflare/vite-plugin";
-import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
+import vue from "@vitejs/plugin-vue";
 /// <reference types="@batijs/core/types" />
 
 import vike from "vike/plugin";
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 
-export default defineConfig({
-  plugins: [
-    vike(),
-    tailwindcss(),
-    vue(),
-    cloudflare({
-      viteEnvironment: {
-        name: "ssr",
-      },
-    }),
-  ],
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), "");
+
+    return {
+        plugins: [vike(), tailwindcss(), vue()],
+        server: {
+            proxy: {
+                "/api": {
+                    target: env.VITE_PROXY_TARGET,
+                    changeOrigin: true,
+                },
+            },
+        },
+    };
 });

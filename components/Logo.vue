@@ -1,7 +1,17 @@
+<script setup lang="ts">
+defineOptions({
+    inheritAttrs: false,
+});
+</script>
+
 <template>
-  <div class="p-5 mb-2">
-    <a href="/">
-      <img src="../assets/logo.svg" height="64" width="64" />
-    </a>
-  </div>
+  <img
+    src="../assets/logo.svg"
+    alt="ЕkonStat logo"
+    width="64"
+    height="64"
+    decoding="async"
+    draggable="false"
+    v-bind="$attrs"
+  />
 </template>

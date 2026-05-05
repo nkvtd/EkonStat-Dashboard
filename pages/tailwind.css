@@ -1,19 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: "Fira Sans", ui-sans-serif, system-ui, sans-serif;
+
+    --color-primary: #e3a21a;
+    --color-secondary: #eef2f5;
+    --color-accent: #41515c;
+    --color-tertiary: #7b8b95;
+    --color-surface: #ffffff;
+    --color-content: #171c1f;
+    --color-background: #f3f5f7;
+    --color-muted: #d6dde2;
+}
+
+.dark {
+    --color-primary: #ffc43d;
+    --color-secondary: #232a2f;
+    --color-accent: #c2cdd4;
+    --color-tertiary: #73838d;
+    --color-surface: #171b1f;
+    --color-content: #eef3f6;
+    --color-background: #0f1316;
+    --color-muted: #2e3940;
+}
+
 @layer base {
-  h1 {
-    @apply mb-4 text-4xl font-bold tracking-tight text-gray-900;
-  }
-  ul {
-    @apply list-disc pl-6;
-  }
-  ol {
-    @apply list-decimal pl-6;
-  }
-  p {
-    @apply mb-2 mt-2;
-  }
-  a {
-    @apply text-blue-600 hover:text-pink-400 visited:text-blue-900;
-  }
+    html {
+        color-scheme: light;
+    }
+
+    html.dark {
+        color-scheme: dark;
+    }
+
+    body {
+        @apply bg-background text-content font-sans antialiased;
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--color-primary) 28%, transparent);
+        color: var(--color-content);
+    }
 }

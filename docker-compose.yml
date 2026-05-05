@@ -1,0 +1,12 @@
+services:
+  dashboard:
+    build: .
+    container_name: dashboard
+    environment:
+      API_UPSTREAM: ${API_UPSTREAM}
+    networks:
+      - edge-proxy
+
+networks:
+  edge-proxy:
+    external: true

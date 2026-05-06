@@ -131,122 +131,124 @@ const formatDate = (value: string | null | undefined) => {
           </div>
 
           <div class="min-h-0 flex-1 overflow-y-auto">
-            <div class="space-y-4 p-4">
-              <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Институција
-                  </p>
+            <div class="flex min-h-full flex-col">
+              <div class="space-y-4 p-4">
+                <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Институција
+                    </p>
 
-                  <div class="mt-4 flex items-start gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <BuildingGovernment24Regular class="h-5 w-5" />
+                    <div class="mt-4 flex items-start gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <BuildingGovernment24Regular class="h-5 w-5" />
+                      </div>
+
+                      <div class="min-w-0">
+                        <p class="text-base font-semibold leading-snug text-content">
+                          {{ contract.institution?.name || "—" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Оператор
+                    </p>
+
+                    <div class="mt-4 flex items-start gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <BuildingRetailMoney24Regular class="h-5 w-5" />
+                      </div>
+
+                      <div class="min-w-0">
+                        <p class="text-base font-semibold leading-snug text-content">
+                          {{ contract.contractor?.name || "—" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="border border-muted bg-background px-4 py-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Спогодена вредност
+                    </p>
+                    <p class="mt-3 text-xl font-semibold leading-none text-content">
+                      {{ formatMoney(contract.assignedContractValue) }}
+                    </p>
+                  </div>
+
+                  <div class="border border-muted bg-background px-4 py-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Реализирана вредност
+                    </p>
+                    <p class="mt-3 text-xl font-semibold leading-none text-content">
+                      {{ formatMoney(contract.realisedContractValue) }}
+                    </p>
+                  </div>
+
+                  <div class="border border-muted bg-background px-4 py-5 sm:col-span-2">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Исплатена вредност
+                    </p>
+                    <p class="mt-3 text-2xl font-bold leading-none text-content">
+                      {{ formatMoney(contract.paidContractValue) }}
+                    </p>
+                  </div>
+                </section>
+
+                <section class="border border-muted bg-surface">
+                  <div class="border-b border-muted bg-background px-4 py-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                      Дополнителни информации
+                    </h4>
+                  </div>
+
+                  <div class="divide-y divide-muted">
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на договор
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.contractType?.name || "—" }}
+                      </p>
                     </div>
 
-                    <div class="min-w-0">
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на постапка
+                      </p>
                       <p class="text-base font-semibold leading-snug text-content">
-                        {{ contract.institution?.name || "—" }}
+                        {{ contract.procedureType?.name || "—" }}
+                      </p>
+                    </div>
+
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на понуда
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.offerType?.name || "—" }}
+                      </p>
+                    </div>
+
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на рамковен договор
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.frameworkAgreementType?.name || "—" }}
                       </p>
                     </div>
                   </div>
-                </div>
+                </section>
+              </div>
 
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Оператор
-                  </p>
-
-                  <div class="mt-4 flex items-start gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <BuildingRetailMoney24Regular class="h-5 w-5" />
-                    </div>
-
-                    <div class="min-w-0">
-                      <p class="text-base font-semibold leading-snug text-content">
-                        {{ contract.contractor?.name || "—" }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="border border-muted bg-background px-4 py-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Спогодена вредност
-                  </p>
-                  <p class="mt-3 text-xl font-semibold leading-none text-content">
-                    {{ formatMoney(contract.assignedContractValue) }}
-                  </p>
-                </div>
-
-                <div class="border border-muted bg-background px-4 py-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Реализирана вредност
-                  </p>
-                  <p class="mt-3 text-xl font-semibold leading-none text-content">
-                    {{ formatMoney(contract.realisedContractValue) }}
-                  </p>
-                </div>
-
-                <div class="border border-muted bg-background px-4 py-5 sm:col-span-2">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Исплатена вредност
-                  </p>
-                  <p class="mt-3 text-2xl font-bold leading-none text-content">
-                    {{ formatMoney(contract.paidContractValue) }}
-                  </p>
-                </div>
-              </section>
-
-              <section class="border border-muted bg-surface">
-                <div class="border-b border-muted bg-background px-4 py-3">
-                  <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                    Дополнителни информации
-                  </h4>
-                </div>
-
-                <div class="divide-y divide-muted">
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на договор
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.contractType?.name || "—" }}
-                    </p>
-                  </div>
-
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на постапка
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.procedureType?.name || "—" }}
-                    </p>
-                  </div>
-
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на понуда
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.offerType?.name || "—" }}
-                    </p>
-                  </div>
-
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на рамковен договор
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.frameworkAgreementType?.name || "—" }}
-                    </p>
-                  </div>
-                </div>
-              </section>
+              <AppFooter variant="drawer" class="mt-auto shrink-0" />
             </div>
-
-            <AppFooter variant="drawer" />
           </div>
         </div>
       </aside>

@@ -186,214 +186,216 @@ const shouldShowChangesSection = computed(
           </div>
 
           <div class="min-h-0 flex-1 overflow-y-auto">
-            <div class="space-y-4 p-4">
-              <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Институција
-                  </p>
+            <div class="flex min-h-full flex-col">
+              <div class="space-y-4 p-4">
+                <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Институција
+                    </p>
 
-                  <div class="mt-4 flex items-start gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <BuildingGovernment24Regular class="h-5 w-5" />
+                    <div class="mt-4 flex items-start gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <BuildingGovernment24Regular class="h-5 w-5" />
+                      </div>
+
+                      <div class="min-w-0">
+                        <p class="text-base font-semibold leading-snug text-content">
+                          {{ contract.institution?.name || "—" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Оператор
+                    </p>
+
+                    <div class="mt-4 flex items-start gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <BuildingRetailMoney24Regular class="h-5 w-5" />
+                      </div>
+
+                      <div class="min-w-0">
+                        <p class="text-base font-semibold leading-snug text-content">
+                          {{ contract.contractor?.name || "—" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div class="border border-muted bg-background px-4 py-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Проценета вредност
+                    </p>
+                    <p class="mt-3 text-xl font-semibold leading-none text-content">
+                      {{ formatMoney(contract.estimatedContractValue) }}
+                    </p>
+                  </div>
+
+                  <div
+                    v-if="showOriginalValue"
+                    class="border border-muted bg-background px-4 py-4"
+                  >
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Првична вредност
+                    </p>
+                    <p class="mt-3 text-xl font-semibold leading-none text-content">
+                      {{ formatMoney(contract.originalContractValue) }}
+                    </p>
+                  </div>
+
+                  <div
+                    class="border border-muted bg-background px-4 py-5"
+                    :class="showOriginalValue ? 'sm:col-span-2' : ''"
+                  >
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Спогодена вредност
+                    </p>
+                    <p class="mt-3 text-2xl font-bold leading-none text-content">
+                      {{ formatMoney(contract.assignedContractValue) }}
+                    </p>
+                  </div>
+                </section>
+
+                <section class="border border-muted bg-surface">
+                  <div class="border-b border-muted bg-background px-4 py-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                      Дополнителни информации
+                    </h4>
+                  </div>
+
+                  <div class="divide-y divide-muted">
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на договор
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.contractType?.name || "—" }}
+                      </p>
                     </div>
 
-                    <div class="min-w-0">
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на постапка
+                      </p>
                       <p class="text-base font-semibold leading-snug text-content">
-                        {{ contract.institution?.name || "—" }}
+                        {{ contract.procedureType?.name || "—" }}
+                      </p>
+                    </div>
+
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на понуда
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.offerType?.name || "—" }}
+                      </p>
+                    </div>
+
+                    <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
+                      <p class="text-sm font-medium text-content">
+                        Вид на рамковен договор
+                      </p>
+                      <p class="text-base font-semibold leading-snug text-content">
+                        {{ contract.frameworkAgreementType?.name || "—" }}
                       </p>
                     </div>
                   </div>
-                </div>
+                </section>
 
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Оператор
-                  </p>
-
-                  <div class="mt-4 flex items-start gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <BuildingRetailMoney24Regular class="h-5 w-5" />
-                    </div>
-
-                    <div class="min-w-0">
-                      <p class="text-base font-semibold leading-snug text-content">
-                        {{ contract.contractor?.name || "—" }}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div class="border border-muted bg-background px-4 py-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Проценета вредност
-                  </p>
-                  <p class="mt-3 text-xl font-semibold leading-none text-content">
-                    {{ formatMoney(contract.estimatedContractValue) }}
-                  </p>
-                </div>
-
-                <div
-                  v-if="showOriginalValue"
-                  class="border border-muted bg-background px-4 py-4"
+                <section
+                  v-if="shouldShowChangesSection"
+                  class="border border-muted bg-surface"
                 >
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Првична вредност
-                  </p>
-                  <p class="mt-3 text-xl font-semibold leading-none text-content">
-                    {{ formatMoney(contract.originalContractValue) }}
-                  </p>
-                </div>
-
-                <div
-                  class="border border-muted bg-background px-4 py-5"
-                  :class="showOriginalValue ? 'sm:col-span-2' : ''"
-                >
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Спогодена вредност
-                  </p>
-                  <p class="mt-3 text-2xl font-bold leading-none text-content">
-                    {{ formatMoney(contract.assignedContractValue) }}
-                  </p>
-                </div>
-              </section>
-
-              <section class="border border-muted bg-surface">
-                <div class="border-b border-muted bg-background px-4 py-3">
-                  <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                    Дополнителни информации
-                  </h4>
-                </div>
-
-                <div class="divide-y divide-muted">
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на договор
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.contractType?.name || "—" }}
-                    </p>
+                  <div class="border-b border-muted bg-background px-4 py-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                      Измени на договорот
+                    </h4>
                   </div>
 
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на постапка
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.procedureType?.name || "—" }}
-                    </p>
+                  <div v-if="isChangesLoading" class="px-4 py-5 text-sm text-accent">
+                    Вчитување измени...
                   </div>
 
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на понуда
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.offerType?.name || "—" }}
-                    </p>
-                  </div>
+                  <div v-else-if="isChangesError" class="p-4">
+                    <div class="border border-red-300/60 bg-red-500/5 p-4">
+                      <div class="flex items-start gap-3">
+                        <div class="flex h-9 w-9 shrink-0 items-center justify-center text-red-500">
+                          <AlertOn24Regular class="h-5 w-5" />
+                        </div>
 
-                  <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
-                    <p class="text-sm font-medium text-content">
-                      Вид на рамковен договор
-                    </p>
-                    <p class="text-base font-semibold leading-snug text-content">
-                      {{ contract.frameworkAgreementType?.name || "—" }}
-                    </p>
-                  </div>
-                </div>
-              </section>
+                        <div class="min-w-0 flex-1">
+                          <p class="text-sm font-semibold text-content">
+                            Деталите за измените не можеа да бидат вчитани
+                          </p>
+                          <p class="mt-1 text-sm leading-5 text-accent">
+                            Податоците моментално не се достапни. Обидете се повторно.
+                          </p>
+                        </div>
 
-              <section
-                v-if="shouldShowChangesSection"
-                class="border border-muted bg-surface"
-              >
-                <div class="border-b border-muted bg-background px-4 py-3">
-                  <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                    Измени на договорот
-                  </h4>
-                </div>
-
-                <div v-if="isChangesLoading" class="px-4 py-5 text-sm text-accent">
-                  Вчитување измени...
-                </div>
-
-                <div v-else-if="isChangesError" class="p-4">
-                  <div class="border border-red-300/60 bg-red-500/5 p-4">
-                    <div class="flex items-start gap-3">
-                      <div class="flex h-9 w-9 shrink-0 items-center justify-center text-red-500">
-                        <AlertOn24Regular class="h-5 w-5" />
+                        <button
+                          class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
+                          @click="refetch()"
+                        >
+                          Обиди се повторно
+                        </button>
                       </div>
-
-                      <div class="min-w-0 flex-1">
-                        <p class="text-sm font-semibold text-content">
-                          Деталите за измените не можеа да бидат вчитани
-                        </p>
-                        <p class="mt-1 text-sm leading-5 text-accent">
-                          Податоците моментално не се достапни. Обидете се повторно.
-                        </p>
-                      </div>
-
-                      <button
-                        class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
-                        @click="refetch()"
-                      >
-                        Обиди се повторно
-                      </button>
                     </div>
                   </div>
-                </div>
 
-                <div
-                  v-else-if="changes?.length"
-                  class="overflow-x-auto"
-                >
-                  <table class="w-full min-w-160 border-collapse text-sm">
-                    <thead class="bg-background">
-                      <tr class="border-b border-muted">
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                          Причина за промена
-                        </th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                          Нова вредност
-                        </th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                          Разлика
-                        </th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                          Променет
-                        </th>
-                      </tr>
-                    </thead>
+                  <div
+                    v-else-if="changes?.length"
+                    class="overflow-x-auto"
+                  >
+                    <table class="w-full min-w-160 border-collapse text-sm">
+                      <thead class="bg-background">
+                        <tr class="border-b border-muted">
+                          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                            Причина за промена
+                          </th>
+                          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                            Нова вредност
+                          </th>
+                          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                            Разлика
+                          </th>
+                          <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                            Променет
+                          </th>
+                        </tr>
+                      </thead>
 
-                    <tbody>
-                      <tr
-                        v-for="change in changes"
-                        :key="change.id"
-                        class="border-b border-muted last:border-b-0"
-                      >
-                        <td class="px-4 py-3 text-sm font-medium text-content">
-                          {{ change.changeReason?.name || "—" }}
-                        </td>
-                        <td class="px-4 py-3 text-sm text-content">
-                          {{ formatMoney(change.updatedContractValue) }}
-                        </td>
-                        <td class="px-4 py-3 text-sm font-semibold text-content">
-                          {{ formatDifference(change.differenceInValue) }}
-                        </td>
-                        <td class="px-4 py-3 text-sm text-content">
-                          {{ formatDate(change.changeDate) }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </section>
+                      <tbody>
+                        <tr
+                          v-for="change in changes"
+                          :key="change.id"
+                          class="border-b border-muted last:border-b-0"
+                        >
+                          <td class="px-4 py-3 text-sm font-medium text-content">
+                            {{ change.changeReason?.name || "—" }}
+                          </td>
+                          <td class="px-4 py-3 text-sm text-content">
+                            {{ formatMoney(change.updatedContractValue) }}
+                          </td>
+                          <td class="px-4 py-3 text-sm font-semibold text-content">
+                            {{ formatDifference(change.differenceInValue) }}
+                          </td>
+                          <td class="px-4 py-3 text-sm text-content">
+                            {{ formatDate(change.changeDate) }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              </div>
+
+              <AppFooter variant="drawer" class="mt-auto shrink-0" />
             </div>
-
-            <AppFooter variant="drawer" />
           </div>
         </div>
       </aside>

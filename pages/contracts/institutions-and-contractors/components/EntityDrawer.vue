@@ -7,6 +7,7 @@ import {
     DocumentEdit24Regular,
 } from "@vicons/fluent";
 import { computed } from "vue";
+import AppFooter from "../../../../components/AppFooter.vue";
 import contractsService from "../../../../services/contracts.service";
 import type {
     AwardedContractItem,
@@ -159,7 +160,10 @@ const getCounterpartyName = (
           </button>
         </div>
 
-        <div v-if="isLoading" class="flex flex-1 items-center justify-center px-6 text-sm text-accent">
+        <div
+          v-if="isLoading"
+          class="flex flex-1 items-center justify-center px-6 text-sm text-accent"
+        >
           Вчитување...
         </div>
 
@@ -197,174 +201,181 @@ const getCounterpartyName = (
           </div>
 
           <div class="min-h-0 flex-1 overflow-y-auto">
-            <div class="space-y-4 p-4">
-              <section class="grid grid-cols-2 gap-4">
-                <div class="col-span-2 border border-muted bg-background px-4 py-5">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    {{ moneyLabel }}
-                  </p>
-                  <p class="mt-3 text-3xl font-bold leading-none text-content">
-                    {{ formatAmount(money) }}
-                    <span class="text-sm font-semibold text-accent">ден.</span>
-                  </p>
-                </div>
-
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Склучени договори
-                  </p>
-
-                  <div class="mt-4 flex items-center gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <DocumentEdit24Regular class="h-5 w-5" />
-                    </div>
-
-                    <div class="text-2xl font-bold leading-none text-content">
-                      {{ details.info.awardedContractsCount ?? 0 }}
-                    </div>
+            <div class="flex min-h-full flex-col">
+              <div class="space-y-4 p-4">
+                <section class="grid grid-cols-2 gap-4">
+                  <div class="col-span-2 border border-muted bg-background px-4 py-5">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      {{ moneyLabel }}
+                    </p>
+                    <p class="mt-3 text-3xl font-bold leading-none text-content">
+                      {{ formatAmount(money) }}
+                      <span class="text-sm font-semibold text-accent">ден.</span>
+                    </p>
                   </div>
-                </div>
 
-                <div class="border border-muted bg-background p-4">
-                  <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                    Реализирани тендери
-                  </p>
-
-                  <div class="mt-4 flex items-center gap-3">
-                    <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
-                      <DocumentCheckmark24Regular class="h-5 w-5" />
-                    </div>
-
-                    <div class="text-2xl font-bold leading-none text-content">
-                      {{ details.info.realisedContractsCount ?? 0 }}
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="border border-muted bg-surface">
-                <div class="border-b border-muted bg-background px-4 py-3">
-                  <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                    Најнови склучени договори
-                  </h4>
-                </div>
-
-                <div class="divide-y divide-muted">
-                  <article
-                    v-for="contract in details.awarded"
-                    :key="contract.id"
-                    class="bg-surface px-4 py-4"
-                  >
-                    <p class="text-sm font-semibold leading-5 text-content">
-                      {{ contract.subject }}
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Склучени договори
                     </p>
 
-                    <p
-                      v-if="getCounterpartyName(contract)"
-                      class="mt-1 text-sm leading-5 text-accent"
-                    >
-                      Со {{ getCounterpartyName(contract) }}
-                    </p>
-
-                    <div class="mt-4 grid gap-3 sm:grid-cols-2">
-                      <div class="border border-muted bg-background px-3 py-3">
-                        <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                          Проценета вредност
-                        </p>
-                        <p class="mt-2 text-sm font-medium text-content">
-                          {{ formatAmount(contract.estimatedContractValue) }} ден.
-                        </p>
+                    <div class="mt-4 flex items-center gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <DocumentEdit24Regular class="h-5 w-5" />
                       </div>
 
-                      <div class="border border-muted bg-background px-3 py-3">
-                        <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                          Спогодена вредност
-                        </p>
-                        <p class="mt-2 text-sm font-bold text-content">
-                          {{ formatAmount(contract.assignedContractValue) }} ден.
-                        </p>
+                      <div class="text-2xl font-bold leading-none text-content">
+                        {{ details.info.awardedContractsCount ?? 0 }}
                       </div>
                     </div>
-                  </article>
-
-                  <div
-                    v-if="!details.awarded.length"
-                    class="px-4 py-5 text-sm text-accent"
-                  >
-                    Нема достапни склучени договори.
                   </div>
-                </div>
-              </section>
 
-              <section class="border border-muted bg-surface">
-                <div class="border-b border-muted bg-background px-4 py-3">
-                  <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                    Најнови реализирани тендери
-                  </h4>
-                </div>
-
-                <div class="divide-y divide-muted">
-                  <article
-                    v-for="contract in details.realised"
-                    :key="contract.id"
-                    class="bg-surface px-4 py-4"
-                  >
-                    <p class="text-sm font-semibold leading-5 text-content">
-                      {{ contract.subject }}
+                  <div class="border border-muted bg-background p-4">
+                    <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
+                      Реализирани тендери
                     </p>
 
-                    <p
-                      v-if="getCounterpartyName(contract)"
-                      class="mt-1 text-sm leading-5 text-accent"
+                    <div class="mt-4 flex items-center gap-3">
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-surface text-primary">
+                        <DocumentCheckmark24Regular class="h-5 w-5" />
+                      </div>
+
+                      <div class="text-2xl font-bold leading-none text-content">
+                        {{ details.info.realisedContractsCount ?? 0 }}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="border border-muted bg-surface">
+                  <div class="border-b border-muted bg-background px-4 py-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                      Најнови склучени договори
+                    </h4>
+                  </div>
+
+                  <div class="divide-y divide-muted">
+                    <article
+                      v-for="contract in details.awarded"
+                      :key="contract.id"
+                      class="bg-surface px-4 py-4"
                     >
-                      Со {{ getCounterpartyName(contract) }}
-                    </p>
+                      <p class="text-sm font-semibold leading-5 text-content">
+                        {{ contract.subject }}
+                      </p>
 
-                    <div class="mt-4 grid gap-3">
-                      <div class="grid gap-3 sm:grid-cols-2">
+                      <p
+                        v-if="getCounterpartyName(contract)"
+                        class="mt-1 text-sm leading-5 text-accent"
+                      >
+                        Со {{ getCounterpartyName(contract) }}
+                      </p>
+
+                      <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                        <div class="border border-muted bg-background px-3 py-3">
+                          <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
+                            Проценета вредност
+                          </p>
+                          <p class="mt-2 text-sm font-medium text-content">
+                            {{ formatAmount(contract.estimatedContractValue) }} ден.
+                          </p>
+                        </div>
+
                         <div class="border border-muted bg-background px-3 py-3">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
                             Спогодена вредност
                           </p>
-                          <p class="mt-2 text-sm font-medium text-content">
+                          <p class="mt-2 text-sm font-bold text-content">
                             {{ formatAmount(contract.assignedContractValue) }} ден.
                           </p>
+                        </div>
+                      </div>
+                    </article>
+
+                    <div
+                      v-if="!details.awarded.length"
+                      class="px-4 py-5 text-sm text-accent"
+                    >
+                      Нема достапни склучени договори.
+                    </div>
+                  </div>
+                </section>
+
+                <section class="border border-muted bg-surface">
+                  <div class="border-b border-muted bg-background px-4 py-3">
+                    <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
+                      Најнови реализирани тендери
+                    </h4>
+                  </div>
+
+                  <div class="divide-y divide-muted">
+                    <article
+                      v-for="contract in details.realised"
+                      :key="contract.id"
+                      class="bg-surface px-4 py-4"
+                    >
+                      <p class="text-sm font-semibold leading-5 text-content">
+                        {{ contract.subject }}
+                      </p>
+
+                      <p
+                        v-if="getCounterpartyName(contract)"
+                        class="mt-1 text-sm leading-5 text-accent"
+                      >
+                        Со {{ getCounterpartyName(contract) }}
+                      </p>
+
+                      <div class="mt-4 grid gap-3">
+                        <div class="grid gap-3 sm:grid-cols-2">
+                          <div class="border border-muted bg-background px-3 py-3">
+                            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
+                              Спогодена вредност
+                            </p>
+                            <p class="mt-2 text-sm font-medium text-content">
+                              {{ formatAmount(contract.assignedContractValue) }} ден.
+                            </p>
+                          </div>
+
+                          <div class="border border-muted bg-background px-3 py-3">
+                            <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
+                              Реализирана вредност
+                            </p>
+                            <p class="mt-2 text-sm font-medium text-content">
+                              {{ formatAmount(contract.realisedContractValue) }} ден.
+                            </p>
+                          </div>
                         </div>
 
                         <div class="border border-muted bg-background px-3 py-3">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                            Реализирана вредност
+                            Исплатена вредност
                           </p>
-                          <p class="mt-2 text-sm font-medium text-content">
-                            {{ formatAmount(contract.realisedContractValue) }} ден.
+                          <p class="mt-2 text-sm font-bold text-content">
+                            {{ formatAmount(contract.paidContractValue) }} ден.
                           </p>
                         </div>
                       </div>
+                    </article>
 
-                      <div class="border border-muted bg-background px-3 py-3">
-                        <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                          Исплатена вредност
-                        </p>
-                        <p class="mt-2 text-sm font-bold text-content">
-                          {{ formatAmount(contract.paidContractValue) }} ден.
-                        </p>
-                      </div>
+                    <div
+                      v-if="!details.realised.length"
+                      class="px-4 py-5 text-sm text-accent"
+                    >
+                      Нема достапни реализирани тендери.
                     </div>
-                  </article>
-
-                  <div
-                    v-if="!details.realised.length"
-                    class="px-4 py-5 text-sm text-accent"
-                  >
-                    Нема достапни реализирани тендери.
                   </div>
-                </div>
-              </section>
+                </section>
+              </div>
+
+              <AppFooter variant="drawer" class="mt-auto shrink-0" />
             </div>
           </div>
         </div>
 
-        <div v-else class="flex flex-1 items-center justify-center px-6 text-center text-sm text-accent">
+        <div
+          v-else
+          class="flex flex-1 items-center justify-center px-6 text-center text-sm text-accent"
+        >
           Нема достапни детали.
         </div>
       </aside>

@@ -24,7 +24,22 @@
 </template>
 
 <script setup lang="ts">
+import { provide, ref } from "vue";
 import AppHeader from "../components/AppHeader.vue";
+import {
+    type Currency,
+    DEFAULT_CURRENCY,
+    isCurrency,
+} from "../services/util/currencyConverter";
+
+const currentStored =
+    typeof window !== "undefined" ? localStorage.getItem("currency") : null;
+const selectedCurrency = ref<Currency>(
+    currentStored && isCurrency(currentStored)
+        ? currentStored
+        : DEFAULT_CURRENCY,
+);
+provide("selectedCurrency", selectedCurrency);
 </script>
 
 <style>

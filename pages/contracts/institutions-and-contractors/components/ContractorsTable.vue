@@ -11,14 +11,28 @@ import {
     ArrowSort24Regular,
     Search24Regular,
 } from "@vicons/fluent";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+    computed,
+    inject,
+    onMounted,
+    onUnmounted,
+    type Ref,
+    ref,
+    watch,
+} from "vue";
 import contractsService from "../../../../services/contracts.service";
 import type { ContractorsQuery } from "../../../../services/types/contracts/Query.types";
 import type { ContractorItem } from "../../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    formatCurrency,
+} from "../../../../services/util/currencyConverter";
 
 const emit = defineEmits<{
     select: [id: number];
 }>();
+
+const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
 
 const searchQuery = ref("");
 const debouncedSearch = ref("");
@@ -78,7 +92,11 @@ const columns: ColumnDef<ContractorItem>[] = [
         accessorKey: "earnings",
         id: "earnings",
         header: "Приход",
-        cell: (info) => `${Number(info.getValue() ?? 0).toLocaleString()} ден.`,
+        cell: (info) =>
+            formatCurrency(
+                Number(info.getValue() ?? 0),
+                selectedCurrency.value,
+            ),
     },
     {
         accessorKey: "awardedContractsCount",

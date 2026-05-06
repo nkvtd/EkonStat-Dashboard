@@ -9,8 +9,20 @@ import {
     useVueTable,
 } from "@tanstack/vue-table";
 import { AlertOn24Regular, ArrowSort24Regular } from "@vicons/fluent";
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+    computed,
+    inject,
+    onMounted,
+    onUnmounted,
+    type Ref,
+    ref,
+    watch,
+} from "vue";
 import type { RealisedContractItem } from "../../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    formatCurrency,
+} from "../../../../services/util/currencyConverter";
 
 const props = withDefaults(
     defineProps<{
@@ -35,8 +47,7 @@ const emit = defineEmits<{
     select: [contract: RealisedContractItem];
 }>();
 
-const formatMoney = (value: number | null | undefined) =>
-    `${Number(value ?? 0).toLocaleString()} ден.`;
+const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
 
 const formatDate = (value: string | null | undefined) => {
     if (!value) return "—";
@@ -76,19 +87,31 @@ const columns: ColumnDef<RealisedContractItem>[] = [
         accessorKey: "assignedContractValue",
         id: "assignedContractValue",
         header: "Спогодена вредност",
-        cell: (info) => formatMoney(Number(info.getValue() ?? 0)),
+        cell: (info) =>
+            formatCurrency(
+                Number(info.getValue() ?? 0),
+                selectedCurrency.value,
+            ),
     },
     {
         accessorKey: "realisedContractValue",
         id: "realisedContractValue",
         header: "Реализирана вредност",
-        cell: (info) => formatMoney(Number(info.getValue() ?? 0)),
+        cell: (info) =>
+            formatCurrency(
+                Number(info.getValue() ?? 0),
+                selectedCurrency.value,
+            ),
     },
     {
         accessorKey: "paidContractValue",
         id: "paidContractValue",
         header: "Исплатена вредност",
-        cell: (info) => formatMoney(Number(info.getValue() ?? 0)),
+        cell: (info) =>
+            formatCurrency(
+                Number(info.getValue() ?? 0),
+                selectedCurrency.value,
+            ),
     },
     {
         accessorKey: "postDate",

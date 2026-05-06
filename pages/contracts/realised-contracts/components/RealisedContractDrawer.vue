@@ -5,9 +5,13 @@ import {
     Dismiss24Regular,
     DocumentCheckmark24Regular,
 } from "@vicons/fluent";
-import { computed } from "vue";
+import { computed, inject, type Ref } from "vue";
 import AppFooter from "../../../../components/AppFooter.vue";
 import type { RealisedContractItem } from "../../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    formatCurrency,
+} from "../../../../services/util/currencyConverter";
 
 const props = withDefaults(
     defineProps<{
@@ -24,13 +28,9 @@ const emit = defineEmits<{
     close: [];
 }>();
 
+const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
+
 const title = computed(() => props.contract?.subject || "Детали");
-
-const formatAmount = (value: number | null | undefined) =>
-    Number(value ?? 0).toLocaleString();
-
-const formatMoney = (value: number | null | undefined) =>
-    `${formatAmount(value)} ден.`;
 
 const formatDate = (value: string | null | undefined) => {
     if (!value) return "—";
@@ -177,7 +177,7 @@ const formatDate = (value: string | null | undefined) => {
                       Спогодена вредност
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
-                      {{ formatMoney(contract.assignedContractValue) }}
+                        {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
                     </p>
                   </div>
 
@@ -186,7 +186,7 @@ const formatDate = (value: string | null | undefined) => {
                       Реализирана вредност
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
-                      {{ formatMoney(contract.realisedContractValue) }}
+                        {{ formatCurrency(contract.realisedContractValue, selectedCurrency) }}
                     </p>
                   </div>
 
@@ -195,7 +195,7 @@ const formatDate = (value: string | null | undefined) => {
                       Исплатена вредност
                     </p>
                     <p class="mt-3 text-2xl font-bold leading-none text-content">
-                      {{ formatMoney(contract.paidContractValue) }}
+                        {{ formatCurrency(contract.paidContractValue, selectedCurrency) }}
                     </p>
                   </div>
                 </section>

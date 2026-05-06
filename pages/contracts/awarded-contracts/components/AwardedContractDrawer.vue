@@ -7,13 +7,18 @@ import {
     Dismiss24Regular,
     DocumentEdit24Regular,
 } from "@vicons/fluent";
-import { computed } from "vue";
+import { computed, inject, type Ref } from "vue";
 import AppFooter from "../../../../components/AppFooter.vue";
 import contractsService from "../../../../services/contracts.service";
 import type {
     AwardedContractItem,
     ChangesInAwardedContractItem,
 } from "../../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    formatCurrency,
+    formatSignedCurrencyDifference,
+} from "../../../../services/util/currencyConverter";
 
 const props = withDefaults(
     defineProps<{
@@ -30,26 +35,13 @@ const emit = defineEmits<{
     close: [];
 }>();
 
+const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
+
 const title = computed(() => props.contract?.subject || "Детали");
-
-const formatAmount = (value: number | null | undefined) =>
-    Number(value ?? 0).toLocaleString();
-
-const formatMoney = (value: number | null | undefined) =>
-    `${formatAmount(value)} ден.`;
 
 const formatDate = (value: string | null | undefined) => {
     if (!value) return "—";
     return new Date(value).toLocaleDateString();
-};
-
-const formatDifference = (value: number | null | undefined) => {
-    const numeric = Number(value ?? 0);
-
-    if (numeric > 0) return `+${numeric.toLocaleString()} ден.`;
-    if (numeric < 0) return `-${Math.abs(numeric).toLocaleString()} ден.`;
-
-    return "0 ден.";
 };
 
 const {
@@ -232,7 +224,7 @@ const shouldShowChangesSection = computed(
                       Проценета вредност
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
-                      {{ formatMoney(contract.estimatedContractValue) }}
+                        {{ formatCurrency(contract.estimatedContractValue, selectedCurrency) }}
                     </p>
                   </div>
 
@@ -244,7 +236,7 @@ const shouldShowChangesSection = computed(
                       Првична вредност
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
-                      {{ formatMoney(contract.originalContractValue) }}
+                        {{ formatCurrency(contract.originalContractValue, selectedCurrency) }}
                     </p>
                   </div>
 
@@ -256,7 +248,7 @@ const shouldShowChangesSection = computed(
                       Спогодена вредност
                     </p>
                     <p class="mt-3 text-2xl font-bold leading-none text-content">
-                      {{ formatMoney(contract.assignedContractValue) }}
+                        {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
                     </p>
                   </div>
                 </section>
@@ -379,10 +371,10 @@ const shouldShowChangesSection = computed(
                             {{ change.changeReason?.name || "—" }}
                           </td>
                           <td class="px-4 py-3 text-sm text-content">
-                            {{ formatMoney(change.updatedContractValue) }}
-                          </td>
-                          <td class="px-4 py-3 text-sm font-semibold text-content">
-                            {{ formatDifference(change.differenceInValue) }}
+                              {{ formatCurrency(change.updatedContractValue, selectedCurrency) }}
+                              </td>
+                              <td class="px-4 py-3 text-sm font-semibold text-content">
+                              {{ formatSignedCurrencyDifference(change.differenceInValue, selectedCurrency) }}
                           </td>
                           <td class="px-4 py-3 text-sm text-content">
                             {{ formatDate(change.changeDate) }}

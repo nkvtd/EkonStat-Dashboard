@@ -2,13 +2,19 @@
 import {
     Dismiss24Regular,
     Globe24Regular,
+    Money24Regular,
     Navigation24Regular,
     WeatherMoon24Regular,
     WeatherSunny24Regular,
 } from "@vicons/fluent";
 import { LogoDiscord, LogoGithub } from "@vicons/ionicons5";
 import { usePageContext } from "vike-vue/usePageContext";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, inject, onMounted, onUnmounted, type Ref, ref } from "vue";
+import {
+    type Currency,
+    DEFAULT_CURRENCY,
+    isCurrency,
+} from "../services/util/currencyConverter";
 import Logo from "./Logo.vue";
 
 const pageContext = usePageContext();
@@ -24,12 +30,20 @@ const routePath = computed(() => getCurrentPath());
 const isMobileMenuOpen = ref(false);
 const isDark = ref(false);
 const currentLang = ref("MK");
+const injectedCurrency = inject<Ref<Currency> | null>("selectedCurrency", null);
+const currentCurrency = injectedCurrency ?? ref<Currency>(DEFAULT_CURRENCY);
 
 const isLangDropdownOpen = ref(false);
 const langDropdownRef = ref<HTMLElement | null>(null);
 
 const isMobileLangDropdownOpen = ref(false);
 const mobileLangDropdownRef = ref<HTMLElement | null>(null);
+
+const isCurrencyDropdownOpen = ref(false);
+const currencyDropdownRef = ref<HTMLElement | null>(null);
+
+const isMobileCurrencyDropdownOpen = ref(false);
+const mobileCurrencyDropdownRef = ref<HTMLElement | null>(null);
 
 const navItems = [
     { label: "Дома", href: "/" },
@@ -38,7 +52,7 @@ const navItems = [
 ];
 
 const languages = ["MK", "EN", "AL"];
-const discordHref = ""; // add real link later
+const currencies = ["MKD", "EUR"];
 
 const applyTheme = (dark: boolean) => {
     document.documentElement.classList.toggle("dark", dark);
@@ -52,15 +66,41 @@ const toggleTheme = () => {
 
 const toggleLangDropdown = () => {
     isLangDropdownOpen.value = !isLangDropdownOpen.value;
+
     if (isLangDropdownOpen.value) {
         isMobileLangDropdownOpen.value = false;
+        isCurrencyDropdownOpen.value = false;
+        isMobileCurrencyDropdownOpen.value = false;
     }
 };
 
 const toggleMobileLangDropdown = () => {
     isMobileLangDropdownOpen.value = !isMobileLangDropdownOpen.value;
+
     if (isMobileLangDropdownOpen.value) {
         isLangDropdownOpen.value = false;
+        isCurrencyDropdownOpen.value = false;
+        isMobileCurrencyDropdownOpen.value = false;
+    }
+};
+
+const toggleCurrencyDropdown = () => {
+    isCurrencyDropdownOpen.value = !isCurrencyDropdownOpen.value;
+
+    if (isCurrencyDropdownOpen.value) {
+        isLangDropdownOpen.value = false;
+        isMobileLangDropdownOpen.value = false;
+        isMobileCurrencyDropdownOpen.value = false;
+    }
+};
+
+const toggleMobileCurrencyDropdown = () => {
+    isMobileCurrencyDropdownOpen.value = !isMobileCurrencyDropdownOpen.value;
+
+    if (isMobileCurrencyDropdownOpen.value) {
+        isLangDropdownOpen.value = false;
+        isMobileLangDropdownOpen.value = false;
+        isCurrencyDropdownOpen.value = false;
     }
 };
 
@@ -69,6 +109,15 @@ const setLanguage = (lang: string) => {
     localStorage.setItem("lang", lang);
     isLangDropdownOpen.value = false;
     isMobileLangDropdownOpen.value = false;
+};
+
+const setCurrency = (currency: string) => {
+    if (isCurrency(currency)) {
+        currentCurrency.value = currency;
+        localStorage.setItem("currency", currency);
+    }
+    isCurrencyDropdownOpen.value = false;
+    isMobileCurrencyDropdownOpen.value = false;
 };
 
 const handleClickOutside = (e: MouseEvent) => {
@@ -85,6 +134,20 @@ const handleClickOutside = (e: MouseEvent) => {
     ) {
         isMobileLangDropdownOpen.value = false;
     }
+
+    if (
+        currencyDropdownRef.value &&
+        !currencyDropdownRef.value.contains(e.target as Node)
+    ) {
+        isCurrencyDropdownOpen.value = false;
+    }
+
+    if (
+        mobileCurrencyDropdownRef.value &&
+        !mobileCurrencyDropdownRef.value.contains(e.target as Node)
+    ) {
+        isMobileCurrencyDropdownOpen.value = false;
+    }
 };
 
 const toggleMobileMenu = () => {
@@ -94,6 +157,10 @@ const toggleMobileMenu = () => {
 onMounted(() => {
     isDark.value = localStorage.getItem("theme") === "dark";
     currentLang.value = localStorage.getItem("lang") || "MK";
+    const storedCurrency = localStorage.getItem("currency");
+    if (storedCurrency && isCurrency(storedCurrency)) {
+        currentCurrency.value = storedCurrency;
+    }
     applyTheme(isDark.value);
     document.addEventListener("click", handleClickOutside);
 });
@@ -157,7 +224,7 @@ const handleNavClick = () => {
               rel="noopener noreferrer"
               class="flex h-11 w-11 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
               aria-label="Discord"
-            > <!-- TODO: add actual discord link -->
+            >
               <LogoDiscord class="h-5 w-5" />
             </a>
           </div>
@@ -181,42 +248,78 @@ const handleNavClick = () => {
           :key="item.href"
           :href="item.href"
           @click="handleNavClick"
-          class="flex min-h-12 items-center border-r border-white/15 px-5 text-sm font-semibold text-white/80 "
-          :class="isNavActive(routePath, item.href) ? 'bg-primary text-black hover:bg-primary/50' : 'hover:bg-white/8 hover:text-white'"
+          class="flex min-h-12 items-center border-r border-white/15 px-5 text-sm font-semibold text-white/80"
+          :class="
+            isNavActive(routePath, item.href)
+              ? 'bg-primary text-black hover:bg-primary/50'
+              : 'hover:bg-white/8 hover:text-white'
+          "
         >
           {{ item.label }}
         </a>
       </nav>
 
-     <div class="flex shrink-0 items-stretch border-l border-white/15">
-       <button
-         @click="toggleTheme"
+      <div class="flex shrink-0 items-stretch border-l border-white/15">
+        <button
+          @click="toggleTheme"
           class="flex min-h-12 items-center gap-2 border-r border-white/15 px-4 text-sm font-medium text-white/80 hover:bg-white/8 hover:text-white"
-         :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
-       >
-         <WeatherSunny24Regular v-if="isDark" class="h-5 w-5" />
-         <WeatherMoon24Regular v-else class="h-5 w-5" />
-       </button>
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <WeatherSunny24Regular v-if="isDark" class="h-5 w-5" />
+          <WeatherMoon24Regular v-else class="h-5 w-5" />
+        </button>
 
-       <div ref="langDropdownRef" class="relative">
-         <button
-           @click.stop="toggleLangDropdown"
-           class="flex min-h-12 items-center gap-2 px-4 text-sm font-medium text-white/80 hover:bg-white/8 hover:text-white"
-         >
-           <Globe24Regular class="h-5 w-5" />
-           <span>{{ currentLang }}</span>
-         </button>
+        <div ref="currencyDropdownRef" class="relative flex min-h-12 items-stretch border-r border-white/15">
+          <button
+          @click.stop="toggleCurrencyDropdown"
+          class="flex h-full min-w-24 items-center justify-center gap-2 px-4 text-sm font-medium text-white/80 hover:bg-white/8 hover:text-white"
+          >
+            <Money24Regular class="h-5 w-5" />
+            <span>{{ currentCurrency }}</span>
+          </button>
 
-         <div
-           v-if="isLangDropdownOpen"
-            class="absolute right-0 top-full z-50 mt-0 min-w-22 border border-white/15 bg-content dark:bg-background"
+          <div
+            v-if="isCurrencyDropdownOpen"
+            class="absolute right-0 top-full z-50 mt-0 w-full min-w-24 border border-white/15 bg-content dark:bg-background"          >
+            <button
+              v-for="currency in currencies"
+              :key="currency"
+              @click="setCurrency(currency)"
+              class="flex h-11 w-full items-center justify-center border-b border-white/15 px-3 text-sm font-medium text-white/85 last:border-b-0"
+              :class="
+                currency === currentCurrency
+                  ? 'bg-primary text-black hover:bg-primary/75'
+                  : 'hover:bg-white/8'
+              "
+            >
+              {{ currency }}
+            </button>
+          </div>
+        </div>
+
+        <div ref="langDropdownRef" class="relative flex min-h-12 items-stretch">
+          <button
+            @click.stop="toggleLangDropdown"
+            class="flex h-full min-w-24 items-center justify-center gap-2 px-4 text-sm font-medium text-white/80 hover:bg-white/8 hover:text-white"
+          >
+            <Globe24Regular class="h-5 w-5" />
+            <span>{{ currentLang }}</span>
+          </button>
+
+          <div
+            v-if="isLangDropdownOpen"
+            class="absolute right-0 top-full z-50 mt-0 w-full min-w-24 border border-white/15 bg-content dark:bg-background"
           >
             <button
               v-for="lang in languages"
               :key="lang"
-             @click="setLanguage(lang)"
-             class="flex h-11 w-full items-center justify-center border-b border-white/15 px-3 text-sm font-medium text-white/85 last:border-b-0 "
-             :class="lang === currentLang ? 'bg-primary text-black hover:bg-primary/75' : 'hover:bg-white/8'"
+              @click="setLanguage(lang)"
+              class="flex h-11 w-full items-center justify-center border-b border-white/15 px-3 text-sm font-medium text-white/85 last:border-b-0"
+              :class="
+                lang === currentLang
+                  ? 'bg-primary text-black hover:bg-primary/75'
+                  : 'hover:bg-white/8'
+              "
             >
               {{ lang }}
             </button>
@@ -236,8 +339,12 @@ const handleNavClick = () => {
             :key="item.href"
             :href="item.href"
             @click="handleNavClick"
-            class="flex min-h-12 items-center justify-center border-b border-white/15 px-4 text-center text-sm font-semibold text-white/85 last:border-b-0 "
-            :class="isNavActive(routePath, item.href) ? 'bg-primary text-black hover:bg-primary/50 hover:text-white' : 'hover:bg-white/8 hover:text-white'"
+            class="flex min-h-12 items-center justify-center border-b border-white/15 px-4 text-center text-sm font-semibold text-white/85 last:border-b-0"
+            :class="
+              isNavActive(routePath, item.href)
+                ? 'bg-primary text-black hover:bg-primary/50 hover:text-white'
+                : 'hover:bg-white/8 hover:text-white'
+            "
           >
             {{ item.label }}
           </a>
@@ -254,6 +361,34 @@ const handleNavClick = () => {
               <WeatherMoon24Regular v-else class="h-5 w-5" />
             </span>
           </button>
+
+          <div ref="mobileCurrencyDropdownRef" class="relative border-b border-white/15">
+            <button
+              @click.stop="toggleMobileCurrencyDropdown"
+              class="flex min-h-12 w-full items-center justify-between px-4 text-sm font-medium text-white"
+            >
+              <span>Валута</span>
+              <span class="flex items-center gap-2 text-white/75">
+                <Money24Regular class="h-5 w-5" />
+                <span>{{ currentCurrency }}</span>
+              </span>
+            </button>
+
+            <div
+              v-if="isMobileCurrencyDropdownOpen"
+              class="border-t border-white/15 bg-white/5"
+            >
+              <button
+                v-for="currency in currencies"
+                :key="currency"
+                @click="setCurrency(currency)"
+                class="flex h-11 w-full items-center justify-center border-b border-white/15 text-sm font-medium text-white/85 last:border-b-0"
+                :class="currency === currentCurrency ? 'bg-primary text-black' : ''"
+              >
+                {{ currency }}
+              </button>
+            </div>
+          </div>
 
           <div ref="mobileLangDropdownRef" class="relative">
             <button
@@ -301,7 +436,7 @@ const handleNavClick = () => {
             rel="noopener noreferrer"
             class="flex h-11 flex-1 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/8 hover:text-white"
             aria-label="Discord"
-          > <!-- TODO: add actual discord link -->
+          >
             <LogoDiscord class="h-5 w-5" />
           </a>
         </div>

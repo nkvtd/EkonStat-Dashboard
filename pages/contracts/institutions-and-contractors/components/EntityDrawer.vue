@@ -6,7 +6,7 @@ import {
     DocumentCheckmark24Regular,
     DocumentEdit24Regular,
 } from "@vicons/fluent";
-import { computed } from "vue";
+import { computed, inject, type Ref } from "vue";
 import AppFooter from "../../../../components/AppFooter.vue";
 import contractsService from "../../../../services/contracts.service";
 import type {
@@ -15,6 +15,10 @@ import type {
     InstitutionDetails,
     RealisedContractItem,
 } from "../../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    formatCurrency,
+} from "../../../../services/util/currencyConverter";
 
 const props = withDefaults(
     defineProps<{
@@ -32,6 +36,8 @@ const props = withDefaults(
 const emit = defineEmits<{
     close: [];
 }>();
+
+const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
 
 type EntityDetails = {
     info: InstitutionDetails | ContractorDetails | null;
@@ -103,9 +109,6 @@ const moneyLabel = computed(() =>
 );
 
 const entityName = computed(() => details.value?.info?.name || "Детали");
-
-const formatAmount = (value: number | null | undefined) =>
-    Number(value ?? 0).toLocaleString();
 
 const getCounterpartyName = (
     contract: AwardedContractItem | RealisedContractItem,
@@ -209,8 +212,7 @@ const getCounterpartyName = (
                       {{ moneyLabel }}
                     </p>
                     <p class="mt-3 text-3xl font-bold leading-none text-content">
-                      {{ formatAmount(money) }}
-                      <span class="text-sm font-semibold text-accent">ден.</span>
+                        {{ formatCurrency(money, selectedCurrency) }}
                     </p>
                   </div>
 
@@ -277,7 +279,7 @@ const getCounterpartyName = (
                             Проценета вредност
                           </p>
                           <p class="mt-2 text-sm font-medium text-content">
-                            {{ formatAmount(contract.estimatedContractValue) }} ден.
+                              {{ formatCurrency(contract.estimatedContractValue, selectedCurrency) }}
                           </p>
                         </div>
 
@@ -286,7 +288,7 @@ const getCounterpartyName = (
                             Спогодена вредност
                           </p>
                           <p class="mt-2 text-sm font-bold text-content">
-                            {{ formatAmount(contract.assignedContractValue) }} ден.
+                              {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
                           </p>
                         </div>
                       </div>
@@ -332,7 +334,7 @@ const getCounterpartyName = (
                               Спогодена вредност
                             </p>
                             <p class="mt-2 text-sm font-medium text-content">
-                              {{ formatAmount(contract.assignedContractValue) }} ден.
+                              {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
                             </p>
                           </div>
 
@@ -341,7 +343,7 @@ const getCounterpartyName = (
                               Реализирана вредност
                             </p>
                             <p class="mt-2 text-sm font-medium text-content">
-                              {{ formatAmount(contract.realisedContractValue) }} ден.
+                              {{ formatCurrency(contract.realisedContractValue, selectedCurrency) }}
                             </p>
                           </div>
                         </div>
@@ -351,7 +353,7 @@ const getCounterpartyName = (
                             Исплатена вредност
                           </p>
                           <p class="mt-2 text-sm font-bold text-content">
-                            {{ formatAmount(contract.paidContractValue) }} ден.
+                              {{ formatCurrency(contract.paidContractValue, selectedCurrency) }}
                           </p>
                         </div>
                       </div>

@@ -142,16 +142,18 @@ onUnmounted(() => {
         v-for="option in options"
         :key="option.value"
         type="button"
-        class="flex min-h-10 w-full items-center justify-between gap-3 border-b border-muted px-3 py-2 text-left text-sm text-content transition-colors duration-150 last:border-b-0 hover:bg-secondary"
+        class="flex min-h-10 w-full items-start justify-between gap-3 border-b border-muted px-3 py-2 text-left text-sm text-content transition-colors duration-150 last:border-b-0 hover:bg-secondary"
         :class="option.value === modelValue ? 'bg-secondary' : ''"
         @click="selectOption(option.value)"
       >
-        <span class="truncate">{{ option.label }}</span>
+        <span class="min-w-0 whitespace-normal wrap-break-word leading-5">
+          {{ option.label }}
+        </span>
         <span
           v-if="option.value === modelValue"
-          class="text-xs font-semibold uppercase tracking-[0.08em] text-primary"
+          class="shrink-0 pt-0.5 text-xs font-semibold uppercase tracking-[0.08em] text-primary"
         >
-          ✓
+          ...
         </span>
       </button>
     </div>

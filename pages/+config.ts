@@ -7,7 +7,7 @@ const config: Config = {
     title: "EkonStat-Dashboard",
     description: "Tool for visualising economic statistics",
 
-    extends: [vikeVue]
+    extends: [vikeVue],
 };
 
 export default config;

@@ -1,0 +1,239 @@
+{
+    "nav": {
+        "dashboard": "Ballina",
+        "contracts": "Tenderët",
+        "treasury": "Thesari"
+    },
+    "settings": {
+        "theme": "Tema",
+        "currency": "Valuta",
+        "language": "Gjuha",
+        "light": "Kalo në modalitetin e ndritshëm",
+        "dark": "Kalo në modalitetin e errët"
+    },
+    "actions": {
+        "openMenu": "Hap menynë",
+        "closeMenu": "Mbyll menynë",
+        "clear": "Pastro",
+        "closeFilters": "Mbyll filtrat",
+        "retry": "Provo përsëri",
+        "close": "Mbyll"
+    },
+    "common": {
+        "title": "Statistikat Ekonomike",
+        "subtitle": "Të dhëna të disponueshme publikisht, në një vend",
+        "github": "GitHub",
+        "discord": "Discord",
+        "loading": "Po ngarkohet...",
+        "loadingPage": "Duke ngarkuar faqen",
+        "filters": "Filtrat",
+        "activeFilters": "filtra aktivë",
+        "active": "Aktivë",
+        "selectDate": "Zgjidh datën",
+        "today": "Sot",
+        "total": "Gjithsej",
+        "details": "Detaje",
+        "noDetailsAvailable": "Nuk ka detaje të disponueshme.",
+        "all": "Të gjitha",
+        "yes": "Po",
+        "no": "Jo"
+    },
+    "footer": {
+        "repositories": "Depot",
+        "poweredBy": "Mundësuar nga"
+    },
+    "error": {
+        "pageNotFound": "Faqja nuk u gjet",
+        "pageNotFoundDesc": "Faqja e kërkuar nuk u gjet",
+        "unexpected": "Gabim i papritur",
+        "unexpectedDesc": "Ndodhi një gabim i papritur"
+    },
+    "home": {
+        "datasetsTitle": "Të dhëna të disponueshme publikisht",
+        "datasetsSubtitle": "Zgjidhni një fushë",
+        "contractsTitle": "Prokurimi Publik",
+        "contractsDesc": "Baza e të dhënave të prokurimeve publike, kontratave, institucioneve publike dhe operatorëve ekonomikë.",
+        "contractsAction": "Kërko tenderët",
+        "treasuryTitle": "Thesari",
+        "treasuryDesc": "Pasqyrë e të gjitha transaksioneve dhe pagesave nga buxheti i shtetit.",
+        "treasuryAction": "Kërko transaksionet",
+        "heroDesc": "Një mjet për konsolidimin e të dhënave ekonomike dhe financiare të disponueshme publikisht në Maqedoni",
+        "viewDatasets": "Shiko të dhënat",
+        "contributeOnGithub": "Kontribuo në GitHub"
+    },
+    "treasury": {
+        "notAvailable": "Seksioni i Thesarit nuk është ende i disponueshëm",
+        "notAvailableDesc": "Kjo faqe është në ndërtim dhe aktualisht nuk ka përmbajtje"
+    },
+    "contracts": {
+        "home": {
+            "pageTitle": "Prokurimi Publik",
+            "pageSubtitle": "Kërko institucionet, operatorët, kontratat e lidhura dhe tenderët e realizuar.",
+            "institutions": "Institucionet publike",
+            "searchInstitutions": "Kërko institucionet",
+            "economicOperators": "Operatorët ekonomikë",
+            "searchOperators": "Kërko operatorët",
+            "awardedContracts": "Kontratat e lidhura",
+            "searchContracts": "Kërko kontratat",
+            "realisedTenders": "Tenderët e realizuar",
+            "searchTenders": "Kërko tenderët"
+        },
+        "tabs": {
+            "institutionsAndContractors": "Institucionet dhe Operatorët",
+            "awardedContracts": "Kontratat e lidhura",
+            "realisedTenders": "Tenderët e realizuar"
+        },
+        "institutionsAndContractors": {
+            "publicInstitutionsHeading": "Institucionet publike",
+            "economicOperatorsHeading": "Operatorët ekonomikë"
+        },
+        "filters": {
+            "basic": "Bazë",
+            "subject": "Objekti",
+            "searchSubject": "Kërko objektin...",
+            "institution": "Institucioni",
+            "searchInstitution": "Kërko institucionin...",
+            "contractor": "Operatori Ekonomik",
+            "searchContractor": "Kërko operatorin...",
+            "types": "Llojet",
+            "typeProcedure": "Lloji i procedurës",
+            "typeOffer": "Lloji i ofertës",
+            "typeFramework": "Lloji i marrëveshjes kornizë",
+            "values": "Vlerat dhe Datat",
+            "estimatedValue": "Vlera e përllogaritur",
+            "assignedValue": "Vlera e ndarë",
+            "dateRange": "Datat",
+            "dateFrom": "Nga data",
+            "dateTo": "Në datën",
+            "publishedFrom": "Publikuar nga",
+            "publishedTo": "Publikuar deri",
+            "other": "Të tjera",
+            "status": "Statusi",
+            "numChanges": "Numri i ndryshimeve",
+            "smallContract": "Kontratë e vogël",
+            "selectType": "Zgjidh llojin",
+            "selectDate": "Zgjidh datën",
+            "select": "Zgjidh",
+            "from": "Nga",
+            "to": "Deri",
+            "loadingTypes": "Po ngarkon llojet..."
+        },
+        "fields": {
+            "institution": "Institucioni",
+            "contractor": "Operatori",
+            "estimatedValue": "Vlera e Përllogaritur",
+            "originalValue": "Vlera Fillestare",
+            "assignedValue": "Vlera e Ndarë",
+            "realisedValue": "Vlera e Realizuar",
+            "paidValue": "Vlera e Paguar",
+            "contractType": "Lloji i Kontratës",
+            "procedureType": "Lloji i Procedurës",
+            "offerType": "Lloji i Ofertës",
+            "frameworkAgreementType": "Lloji i Marrëveshjes Kornizë",
+            "changeReason": "Arsyeja e Ndryshimit",
+            "newValue": "Vlera e Re",
+            "difference": "Diferenca",
+            "changedDate": "Data e Ndryshimit",
+            "processNumber": "Numri i Procesit",
+            "postDate": "Data e Publikimit",
+            "subject": "Objekti"
+        },
+        "awarded": {
+            "drawerTitle": "Informacione për kontratën e lidhur",
+            "additionalInfo": "Informacione Shtesë",
+            "contractChanges": "Ndryshimet e Kontratës",
+            "errorLoadingChanges": "Nuk arritëm të ngarkojmë ndryshimet e kontratës.",
+            "errorDetailsLoading": "Detajet e ndryshimeve nuk mund të ngarkohen",
+            "dataNotAvailableRetry": "Të dhënat nuk janë të disponueshme aktualisht. Ju lutemi provoni përsëri."
+        },
+        "realised": {
+            "detailsTitle": "Informacione për tenderin e realizuar",
+            "additionalInfo": "Informacione Shtesë"
+        },
+        "institutions": {
+            "table": {
+                "nameHeader": "Emri i institucionit",
+                "spendings": "Shpenzimet",
+                "awardedContracts": "Kontratat e lidhura",
+                "realisedContracts": "Tenderët e realizuar",
+                "errorTitle": "Nuk arritëm të ngarkojmë institucionet",
+                "errorDesc": "Të dhënat nuk janë të disponueshme aktualisht. Ju lutemi provoni përsëri pas disa sekondash.",
+                "noResults": "Nuk u gjetën institucione."
+            },
+            "searchPlaceholder": "Kërko institucionin..."
+        },
+        "contractors": {
+            "table": {
+                "nameHeader": "Emri i operatorit",
+                "earnings": "Të ardhurat",
+                "awardedContracts": "Kontratat e lidhura",
+                "realisedContracts": "Tenderët e realizuar",
+                "errorTitle": "Nuk arritëm të ngarkojmë operatorët",
+                "errorDesc": "Të dhënat nuk janë të disponueshme aktualisht. Ju lutemi provoni përsëri pas disa sekondash.",
+                "noResults": "Nuk u gjetën operatorë."
+            },
+            "searchPlaceholder": "Kërko operatorin..."
+        },
+        "entityDrawer": {
+            "detailsTitle": "Informacione Shtesë",
+            "totalSpendings": "Shpenzimet totale",
+            "totalEarnings": "Të ardhurat totale",
+            "awardedContracts": "Kontratat e lidhura",
+            "realisedContracts": "Tenderët e realizuar",
+            "contractsTitle": "Kontratat",
+            "noContracts": "Nuk ka kontrata.",
+            "contractsLoading": "Duke ngarkuar kontratat...",
+            "errorTitle": "Detajet nuk mund të ngarkohen",
+            "errorDesc": "Të dhënat nuk janë të disponueshme aktualisht. Ju lutemi provoni përsëri pas disa sekondash.",
+            "latestAwardedContracts": "Kontratat më të fundit të lidhura",
+            "latestRealisedContracts": "Tenderët më të fundit të realizuar",
+            "with": "me",
+            "noAwardedContracts": "Nuk ka kontrata të lidhura të disponueshme.",
+            "noRealisedContracts": "Nuk ka tenderë të realizuar të disponueshëm.",
+            "noDetails": "Nuk ka detaje të disponueshme."
+        },
+        "table": {
+            "processNumber": "Numri i procesit",
+            "numChanges": "Ndryshime",
+            "publicInstitution": "Institucioni publik",
+            "economicOperator": "Operatori ekonomik",
+            "estimatedValue": "Vlera e përllogaritur",
+            "originalValue": "Vlera fillestare",
+            "assignedValue": "Vlera e ndarë",
+            "realisedValue": "Vlera e realizuar",
+            "paidValue": "Vlera e paguar",
+            "postDate": "Data e publikimit",
+            "noResultsTitle": "Nuk u gjetën kontrata",
+            "noResultsDesc": "Provoni të ndryshoni filtrat e kërkimit.",
+            "errorTitle": "Nuk arritëm të ngarkojmë kontratat",
+            "errorDesc": "Ndodhi një gabim gjatë ngarkimit të të dhënave.",
+            "loadingMore": "Duke ngarkuar më shumë...",
+            "endOfResults": "Nuk ka më rezultate"
+        }
+    },
+    "datepicker": {
+        "weekdays": {
+            "mon": "H",
+            "tue": "M",
+            "wed": "M",
+            "thu": "E",
+            "fri": "P",
+            "sat": "S",
+            "sun": "D"
+        },
+        "months": {
+            "jan": "Janar",
+            "feb": "Shkurt",
+            "mar": "Mars",
+            "apr": "Prill",
+            "may": "Maj",
+            "jun": "Qershor",
+            "jul": "Korrik",
+            "aug": "Gusht",
+            "sep": "Shtator",
+            "oct": "Tetor",
+            "nov": "Nëntor",
+            "dec": "Dhjetor"
+        }
+    }
+}

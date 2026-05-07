@@ -1,0 +1,239 @@
+{
+    "nav": {
+        "dashboard": "Home",
+        "contracts": "Contracts",
+        "treasury": "Treasury"
+    },
+    "settings": {
+        "theme": "Theme",
+        "currency": "Currency",
+        "language": "Language",
+        "light": "Switch to light mode",
+        "dark": "Switch to dark mode"
+    },
+    "actions": {
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "clear": "Clear",
+        "closeFilters": "Close filters",
+        "retry": "Try again",
+        "close": "Close"
+    },
+    "common": {
+        "title": "Economic Statistics",
+        "subtitle": "Publicly available data, in one place",
+        "github": "GitHub",
+        "discord": "Discord",
+        "loading": "Loading...",
+        "loadingPage": "Loading page",
+        "filters": "Filters",
+        "activeFilters": "active",
+        "active": "Active",
+        "selectDate": "Select date",
+        "today": "Today",
+        "total": "Total",
+        "details": "Details",
+        "noDetailsAvailable": "No details available.",
+        "all": "All",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "footer": {
+        "repositories": "Repositories",
+        "poweredBy": "Powered by"
+    },
+    "error": {
+        "pageNotFound": "Page not found",
+        "pageNotFoundDesc": "The requested page could not be found",
+        "unexpected": "Unexpected error",
+        "unexpectedDesc": "An unexpected error occurred"
+    },
+    "home": {
+        "datasetsTitle": "Publicly available data",
+        "datasetsSubtitle": "Choose an area",
+        "contractsTitle": "Public Procurement",
+        "contractsDesc": "Database of public procurements, contracts, public institutions and economic operators.",
+        "contractsAction": "Browse contracts",
+        "treasuryTitle": "Treasury",
+        "treasuryDesc": "Insight into all transactions and payments from the state budget.",
+        "treasuryAction": "Browse transactions",
+        "heroDesc": "A tool for consolidating publicly available economic and financial data in Macedonia",
+        "viewDatasets": "View datasets",
+        "contributeOnGithub": "Contribute on GitHub"
+    },
+    "treasury": {
+        "notAvailable": "The Treasury section is not yet available",
+        "notAvailableDesc": "This page is under construction and currently has no content"
+    },
+    "contracts": {
+        "home": {
+            "pageTitle": "Public Procurement",
+            "pageSubtitle": "Search institutions, operators, awarded and realised contracts.",
+            "institutions": "Public institutions",
+            "searchInstitutions": "Browse institutions",
+            "economicOperators": "Economic operators",
+            "searchOperators": "Browse operators",
+            "awardedContracts": "Awarded contracts",
+            "searchContracts": "Browse contracts",
+            "realisedTenders": "Realised contracts",
+            "searchTenders": "Browse contracts"
+        },
+        "tabs": {
+            "institutionsAndContractors": "Institutions & Operators",
+            "awardedContracts": "Awarded contracts",
+            "realisedTenders": "Realised contracts"
+        },
+        "institutionsAndContractors": {
+            "publicInstitutionsHeading": "Public institutions",
+            "economicOperatorsHeading": "Economic operators"
+        },
+        "filters": {
+            "basic": "Basic",
+            "subject": "Subject",
+            "searchSubject": "Search subject...",
+            "institution": "Institution",
+            "searchInstitution": "Search institution...",
+            "contractor": "Economic Operator",
+            "searchContractor": "Search operator...",
+            "types": "Types",
+            "typeProcedure": "Procedure Type",
+            "typeOffer": "Offer Type",
+            "typeFramework": "Framework Agreement Type",
+            "values": "Values and Dates",
+            "estimatedValue": "Estimated Value",
+            "assignedValue": "Assigned Value",
+            "dateRange": "Dates",
+            "dateFrom": "From date",
+            "dateTo": "To date",
+            "publishedFrom": "Published from",
+            "publishedTo": "Published to",
+            "other": "Other",
+            "status": "Status",
+            "numChanges": "Number of changes",
+            "smallContract": "Small contract",
+            "selectType": "Select type",
+            "selectDate": "Select date",
+            "select": "Select",
+            "from": "From",
+            "to": "To",
+            "loadingTypes": "Loading types..."
+        },
+        "fields": {
+            "institution": "Institution",
+            "contractor": "Contractor",
+            "estimatedValue": "Estimated Value",
+            "originalValue": "Original Value",
+            "assignedValue": "Assigned Value",
+            "realisedValue": "Realised Value",
+            "paidValue": "Paid Value",
+            "contractType": "Contract Type",
+            "procedureType": "Procedure Type",
+            "offerType": "Offer Type",
+            "frameworkAgreementType": "Framework Agreement Type",
+            "changeReason": "Change Reason",
+            "newValue": "New Value",
+            "difference": "Difference",
+            "changedDate": "Changed Date",
+            "processNumber": "Process Number",
+            "postDate": "Post Date",
+            "subject": "Subject"
+        },
+        "awarded": {
+            "drawerTitle": "Information about the awarded contract",
+            "additionalInfo": "Additional Information",
+            "contractChanges": "Contract Changes",
+            "errorLoadingChanges": "Failed to load contract changes.",
+            "errorDetailsLoading": "Change details could not be loaded",
+            "dataNotAvailableRetry": "Data is currently unavailable. Please try again."
+        },
+        "realised": {
+            "detailsTitle": "Information about the realised contract",
+            "additionalInfo": "Additional Information"
+        },
+        "institutions": {
+            "table": {
+                "nameHeader": "Institution name",
+                "spendings": "Spendings",
+                "awardedContracts": "Awarded contracts",
+                "realisedContracts": "Realised contracts",
+                "errorTitle": "Failed to load institutions",
+                "errorDesc": "Data is currently unavailable. Please try again in a few seconds.",
+                "noResults": "No institutions found."
+            },
+            "searchPlaceholder": "Search institution..."
+        },
+        "contractors": {
+            "table": {
+                "nameHeader": "Contractor name",
+                "earnings": "Earnings",
+                "awardedContracts": "Awarded contracts",
+                "realisedContracts": "Realised contracts",
+                "errorTitle": "Failed to load contractors",
+                "errorDesc": "Data is currently unavailable. Please try again in a few seconds.",
+                "noResults": "No contractors found."
+            },
+            "searchPlaceholder": "Search operator..."
+        },
+        "entityDrawer": {
+            "detailsTitle": "Additional Information",
+            "totalSpendings": "Total spendings",
+            "totalEarnings": "Total earnings",
+            "awardedContracts": "Awarded contracts",
+            "realisedContracts": "Realised contracts",
+            "contractsTitle": "Contracts",
+            "noContracts": "No contracts.",
+            "contractsLoading": "Loading contracts...",
+            "errorTitle": "Details could not be loaded",
+            "errorDesc": "Data is currently unavailable. Please try again in a few seconds.",
+            "latestAwardedContracts": "Latest awarded contracts",
+            "latestRealisedContracts": "Latest realised contracts",
+            "with": "with",
+            "noAwardedContracts": "No awarded contracts available.",
+            "noRealisedContracts": "No realised contracts available.",
+            "noDetails": "No details available."
+        },
+        "table": {
+            "processNumber": "Process number",
+            "numChanges": "Changes",
+            "publicInstitution": "Public institution",
+            "economicOperator": "Economic operator",
+            "estimatedValue": "Estimated value",
+            "originalValue": "Original value",
+            "assignedValue": "Assigned value",
+            "realisedValue": "Realised value",
+            "paidValue": "Actual value paid",
+            "postDate": "Post date",
+            "noResultsTitle": "No contracts found",
+            "noResultsDesc": "Try changing the search filters.",
+            "errorTitle": "Failed to load contracts",
+            "errorDesc": "An error occurred while loading data.",
+            "loadingMore": "Loading more...",
+            "endOfResults": "No more results"
+        }
+    },
+    "datepicker": {
+        "weekdays": {
+            "mon": "M",
+            "tue": "T",
+            "wed": "W",
+            "thu": "T",
+            "fri": "F",
+            "sat": "S",
+            "sun": "S"
+        },
+        "months": {
+            "jan": "January",
+            "feb": "February",
+            "mar": "March",
+            "apr": "April",
+            "may": "May",
+            "jun": "June",
+            "jul": "July",
+            "aug": "August",
+            "sep": "September",
+            "oct": "October",
+            "nov": "November",
+            "dec": "December"
+        }
+    }
+}

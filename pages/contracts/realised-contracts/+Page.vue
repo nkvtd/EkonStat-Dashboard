@@ -7,6 +7,7 @@ import {
     FilterDismiss24Regular,
 } from "@vicons/fluent";
 import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import contractsService from "../../../services/contracts.service";
 import type { RealisedContractsQuery } from "../../../services/types/contracts/Query.types";
 import type {
@@ -17,6 +18,8 @@ import ContractsSubTabs from "../components/ContractsSubTabs.vue";
 import RealisedContractDrawer from "./components/RealisedContractDrawer.vue";
 import RealisedContractsFilters from "./components/RealisedContractsFilters.vue";
 import RealisedContractsTable from "./components/RealisedContractsTable.vue";
+
+const { t } = useI18n();
 
 type FilterForm = {
     subject: string;
@@ -270,10 +273,10 @@ const closeMobileFilters = () => {
         >
           <div class="min-w-0">
             <p class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-              Филтри
+              {{ t('common.filters') }}
             </p>
             <p class="mt-1 text-xs uppercase tracking-[0.08em] text-tertiary">
-              {{ activeFiltersCount }} активни
+              {{ activeFiltersCount }} {{ t('common.activeFilters') }}
             </p>
           </div>
 
@@ -282,7 +285,7 @@ const closeMobileFilters = () => {
               class="inline-flex h-10 items-center justify-center border border-muted bg-surface px-3 text-xs font-semibold uppercase tracking-[0.08em] text-accent transition-colors duration-150 hover:bg-secondary hover:text-content"
               @click="resetFilters"
             >
-              Исчисти
+              {{ t('actions.clear') }}
             </button>
 
             <button
@@ -328,15 +331,15 @@ const closeMobileFilters = () => {
         >
           <FilterDismiss24Regular v-if="filtersAreOpen" class="h-4 w-4" />
           <Filter24Regular v-else class="h-4 w-4" />
-          <span>Филтри</span>
+          <span>{{ t('common.filters') }}</span>
         </button>
 
         <div class="min-w-0">
           <h3 class="text-sm font-semibold uppercase tracking-[0.08em] text-content">
-            Реализирани договори
+            {{ t('contracts.tabs.realisedTenders') }}
           </h3>
           <p class="mt-1 text-xs uppercase tracking-[0.08em] text-tertiary">
-            Активни филтри: {{ activeFiltersCount }}
+            {{ t('common.activeFilters') }}: {{ activeFiltersCount }}
           </p>
         </div>
       </div>
@@ -394,10 +397,10 @@ const closeMobileFilters = () => {
           >
             <div class="min-w-0">
               <p class="text-xs font-semibold uppercase tracking-[0.08em] text-white">
-                Филтри
+                {{ t('common.filters') }}
               </p>
               <p class="mt-1 text-xs uppercase tracking-[0.08em] text-white/65">
-                Активни: {{ activeFiltersCount }}
+                {{ t('common.active') }}: {{ activeFiltersCount }}
               </p>
             </div>
 
@@ -406,13 +409,12 @@ const closeMobileFilters = () => {
                 class="inline-flex h-10 items-center justify-center border border-white/15 bg-white/5 px-3 text-xs font-semibold uppercase tracking-[0.08em] text-white/85 transition-colors duration-150 hover:bg-white/10 hover:text-white"
                 @click="resetFilters"
               >
-                Исчисти
+                {{ t('actions.clear') }}
               </button>
 
               <button
                 class="flex h-10 w-10 items-center justify-center border border-white/15 bg-white/5 text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
-                aria-label="Close filters"
-                @click="closeMobileFilters"
+                :aria-label="t('actions.closeFilters')"
               >
                 <Dismiss24Regular class="h-5 w-5" />
               </button>

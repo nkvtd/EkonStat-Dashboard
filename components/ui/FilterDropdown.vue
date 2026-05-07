@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ChevronDown24Regular, Dismiss24Regular } from "@vicons/fluent";
 import { computed, onMounted, onUnmounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 type Option = {
     label: string;
@@ -15,9 +18,13 @@ const props = withDefaults(
         emptyValue?: string;
     }>(),
     {
-        placeholder: "Избери",
+        placeholder: "",
         emptyValue: "",
     },
+);
+
+const resolvedPlaceholder = computed(
+    () => props.placeholder || t("contracts.filters.select"),
 );
 
 const emit = defineEmits<{
@@ -33,7 +40,7 @@ const hasValue = computed(() => props.modelValue !== props.emptyValue);
 const selectedLabel = computed(
     () =>
         props.options.find((option) => option.value === props.modelValue)
-            ?.label ?? props.placeholder,
+            ?.label ?? resolvedPlaceholder.value,
 );
 
 const clear = () => {

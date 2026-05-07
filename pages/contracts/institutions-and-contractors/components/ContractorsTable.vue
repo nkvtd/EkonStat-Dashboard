@@ -20,7 +20,11 @@ import {
     ref,
     watch,
 } from "vue";
+import { useI18n } from "vue-i18n";
 import contractsService from "../../../../services/contracts.service";
+
+const { t } = useI18n();
+
 import type { ContractorsQuery } from "../../../../services/types/contracts/Query.types";
 import type { ContractorItem } from "../../../../services/types/contracts/Response.types";
 import {
@@ -81,17 +85,17 @@ const rows = computed(
     () => data.value?.pages.flatMap((page) => page.data ?? []) ?? [],
 );
 
-const columns: ColumnDef<ContractorItem>[] = [
+const columns = computed<ColumnDef<ContractorItem>[]>(() => [
     {
         accessorKey: "name",
         id: "name",
-        header: "Име на оператор",
+        header: () => t("contracts.contractors.table.nameHeader"),
         enableSorting: false,
     },
     {
         accessorKey: "earnings",
         id: "earnings",
-        header: "Приход",
+        header: () => t("contracts.contractors.table.earnings"),
         cell: (info) =>
             formatCurrency(
                 Number(info.getValue() ?? 0),
@@ -101,20 +105,22 @@ const columns: ColumnDef<ContractorItem>[] = [
     {
         accessorKey: "awardedContractsCount",
         id: "awardedContractsCount",
-        header: "Склучени договори",
+        header: () => t("contracts.contractors.table.awardedContracts"),
     },
     {
         accessorKey: "realisedContractsCount",
         id: "realisedContractsCount",
-        header: "Реализирани тендери",
+        header: () => t("contracts.contractors.table.realisedContracts"),
     },
-];
+]);
 
 const table = useVueTable({
     get data() {
         return rows.value;
     },
-    columns,
+    get columns() {
+        return columns.value;
+    },
     state: {
         get sorting() {
             return sorting.value;
@@ -210,7 +216,7 @@ const getSortState = (
     <div class="flex flex-none flex-col gap-3 border-b border-muted px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
       <div class="min-w-0">
         <h3 class="text-sm font-semibold uppercase tracking-[0.08em] text-content">
-          Економски оператори
+          {{ t('contracts.institutionsAndContractors.economicOperatorsHeading') }}
         </h3>
       </div>
 
@@ -219,7 +225,7 @@ const getSortState = (
         <input
           v-model="searchQuery"
           type="text"
-          placeholder="Пребарај оператори..."
+          :placeholder="t('contracts.contractors.searchPlaceholder')"
           class="h-10 w-full border border-muted bg-background py-2 pl-9 pr-4 text-sm text-content placeholder:text-tertiary focus:border-primary focus:outline-none"
         />
       </div>
@@ -283,10 +289,10 @@ const getSortState = (
 
                 <div class="min-w-0 flex-1">
                   <p class="text-sm font-semibold text-content">
-                    Не можевме да ги вчитаме операторите
+                    {{ t('contracts.contractors.table.errorTitle') }}
                   </p>
                   <p class="mt-1 text-sm leading-5 text-accent">
-                    Податоците моментално не се достапни. Обидете се повторно за неколку секунди.
+                    {{ t('contracts.contractors.table.errorDesc') }}
                   </p>
                 </div>
 
@@ -294,7 +300,7 @@ const getSortState = (
                   class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
                   @click="refetch()"
                 >
-                  Обиди се повторно
+                  {{ t('actions.retry') }}
                 </button>
               </div>
             </td>
@@ -302,13 +308,13 @@ const getSortState = (
 
           <tr v-else-if="isLoading && rows.length === 0">
             <td colspan="4" class="px-4 py-8 text-center text-accent">
-              Вчитување...
+              {{ t('common.loading') }}
             </td>
           </tr>
 
           <tr v-else-if="rows.length === 0">
             <td colspan="4" class="px-4 py-8 text-center text-accent">
-              Не се пронајдени оператори.
+              {{ t('contracts.contractors.table.noResults') }}
             </td>
           </tr>
 
@@ -346,7 +352,7 @@ const getSortState = (
 
           <tr v-if="isFetchingNextPage">
             <td colspan="4" class="border-t border-muted px-4 py-3 text-center text-xs uppercase tracking-[0.08em] text-tertiary">
-              Се вчитуваат повеќе резултати...
+              {{ t('common.loading') }}
             </td>
           </tr>
         </tbody>

@@ -1,19 +1,23 @@
 <script lang="ts" setup>
 import { usePageContext } from "vike-vue/usePageContext";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import AppFooter from "../../components/AppFooter.vue";
 import Logo from "../../components/Logo.vue";
 
 const pageContext = usePageContext();
+const { t } = useI18n();
 
 let { is404, abortReason } = pageContext;
 
-if (!abortReason) {
-    abortReason = is404
-        ? "Бараната страна не беше пронајдена"
-        : "Настана неочекувана грешка";
-}
+const displayReason = computed(() => {
+    if (abortReason) return abortReason;
+    return is404 ? t("error.pageNotFoundDesc") : t("error.unexpectedDesc");
+});
 
-const heading = is404 ? "Страната не е пронајдена" : "Неочекувана грешка";
+const heading = computed(() =>
+    is404 ? t("error.pageNotFound") : t("error.unexpected"),
+);
 </script>
 
 <template>
@@ -27,7 +31,7 @@ const heading = is404 ? "Страната не е пронајдена" : "Не�
         </h1>
 
         <p class="mt-3 text-sm leading-6 text-accent sm:text-base">
-          {{ abortReason }}
+          {{ displayReason }}
         </p>
       </div>
     </div>

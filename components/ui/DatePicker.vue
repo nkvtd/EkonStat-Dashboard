@@ -7,6 +7,9 @@ import {
     Dismiss20Regular,
 } from "@vicons/fluent";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 
 const props = withDefaults(
     defineProps<{
@@ -16,10 +19,14 @@ const props = withDefaults(
         maxYear?: number;
     }>(),
     {
-        placeholder: "Избери датум",
+        placeholder: "",
         minYear: 2000,
         maxYear: new Date().getFullYear(),
     },
+);
+
+const resolvedPlaceholder = computed(
+    () => props.placeholder || t("common.selectDate"),
 );
 
 const emit = defineEmits<{
@@ -39,21 +46,29 @@ const rootRef = ref<HTMLElement | null>(null);
 const open = ref(false);
 const instanceId = `date-picker-${Math.random().toString(36).slice(2, 10)}`;
 
-const weekdayLabels = ["П", "В", "С", "Ч", "П", "С", "Н"];
-const monthLabels = [
-    "Јануари",
-    "Февруари",
-    "Март",
-    "Април",
-    "Мај",
-    "Јуни",
-    "Јули",
-    "Август",
-    "Септември",
-    "Октомври",
-    "Ноември",
-    "Декември",
-];
+const weekdayLabels = computed(() => [
+    t("datepicker.weekdays.mon"),
+    t("datepicker.weekdays.tue"),
+    t("datepicker.weekdays.wed"),
+    t("datepicker.weekdays.thu"),
+    t("datepicker.weekdays.fri"),
+    t("datepicker.weekdays.sat"),
+    t("datepicker.weekdays.sun"),
+]);
+const monthLabels = computed(() => [
+    t("datepicker.months.jan"),
+    t("datepicker.months.feb"),
+    t("datepicker.months.mar"),
+    t("datepicker.months.apr"),
+    t("datepicker.months.may"),
+    t("datepicker.months.jun"),
+    t("datepicker.months.jul"),
+    t("datepicker.months.aug"),
+    t("datepicker.months.sep"),
+    t("datepicker.months.oct"),
+    t("datepicker.months.nov"),
+    t("datepicker.months.dec"),
+]);
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -89,12 +104,12 @@ watch(
 );
 
 const formattedValue = computed(() => {
-    if (!props.modelValue) return props.placeholder;
+    if (!props.modelValue) return resolvedPlaceholder.value;
 
     const parsed = fromIsoDate(props.modelValue);
-    if (!parsed) return props.placeholder;
+    if (!parsed) return resolvedPlaceholder.value;
 
-    return parsed.toLocaleDateString("mk-MK", {
+    return parsed.toLocaleDateString(locale.value.replace("_", "-"), {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
@@ -364,7 +379,7 @@ onUnmounted(() => {
             class="inline-flex h-8 items-center justify-center border border-muted bg-background px-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-accent transition-colors duration-150 hover:bg-secondary hover:text-content"
             @click.stop="clear"
           >
-            Исчисти
+            {{ t('actions.clear') }}
           </button>
 
           <button
@@ -372,7 +387,7 @@ onUnmounted(() => {
             class="inline-flex h-8 items-center justify-center border border-primary bg-primary px-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-black transition-colors duration-150 hover:bg-primary/85"
             @click.stop="goToToday"
           >
-            Денес
+            {{ t('common.today') }}
           </button>
         </div>
       </div>

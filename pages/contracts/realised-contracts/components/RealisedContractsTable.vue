@@ -18,11 +18,14 @@ import {
     ref,
     watch,
 } from "vue";
+import { useI18n } from "vue-i18n";
 import type { RealisedContractItem } from "../../../../services/types/contracts/Response.types";
 import {
     type Currency,
     formatCurrency,
 } from "../../../../services/util/currencyConverter";
+
+const { t } = useI18n();
 
 const props = withDefaults(
     defineProps<{
@@ -63,30 +66,30 @@ const numericColumnIds = [
     "processNumber",
 ];
 
-const columns: ColumnDef<RealisedContractItem>[] = [
+const columns = computed<ColumnDef<RealisedContractItem>[]>(() => [
     {
         accessorKey: "processNumber",
         id: "processNumber",
-        header: "Оглас",
+        header: () => t("contracts.table.processNumber"),
         enableSorting: false,
         cell: (info) => info.getValue() || "—",
     },
     {
         accessorFn: (row) => row.institution?.name ?? "—",
         id: "institution",
-        header: "Јавна институција",
+        header: () => t("contracts.table.publicInstitution"),
         enableSorting: false,
     },
     {
         accessorFn: (row) => row.contractor?.name ?? "—",
         id: "contractor",
-        header: "Економски оператор",
+        header: () => t("contracts.table.economicOperator"),
         enableSorting: false,
     },
     {
         accessorKey: "assignedContractValue",
         id: "assignedContractValue",
-        header: "Спогодена вредност",
+        header: () => t("contracts.table.assignedValue"),
         cell: (info) =>
             formatCurrency(
                 Number(info.getValue() ?? 0),
@@ -96,7 +99,7 @@ const columns: ColumnDef<RealisedContractItem>[] = [
     {
         accessorKey: "realisedContractValue",
         id: "realisedContractValue",
-        header: "Реализирана вредност",
+        header: () => t("contracts.table.realisedValue"),
         cell: (info) =>
             formatCurrency(
                 Number(info.getValue() ?? 0),
@@ -106,7 +109,7 @@ const columns: ColumnDef<RealisedContractItem>[] = [
     {
         accessorKey: "paidContractValue",
         id: "paidContractValue",
-        header: "Исплатена вредност",
+        header: () => t("contracts.table.paidValue"),
         cell: (info) =>
             formatCurrency(
                 Number(info.getValue() ?? 0),
@@ -116,17 +119,19 @@ const columns: ColumnDef<RealisedContractItem>[] = [
     {
         accessorKey: "postDate",
         id: "postDate",
-        header: "Објавен",
+        header: () => t("contracts.table.postDate"),
         cell: (info) =>
             formatDate(info.getValue() as string | null | undefined),
     },
-];
+]);
 
 const table = useVueTable({
     get data() {
         return props.rows;
     },
-    columns,
+    get columns() {
+        return columns.value;
+    },
     state: {
         get sorting() {
             return props.sorting;
@@ -286,10 +291,10 @@ const isNumericColumn = (id: string) => numericColumnIds.includes(id);
 
                 <div class="min-w-0 flex-1">
                   <p class="text-sm font-semibold text-content">
-                    Не можевме да ги вчитаме договорите
+                    {{ t('contracts.table.errorTitle') }}
                   </p>
                   <p class="mt-1 text-sm leading-5 text-accent">
-                    Податоците моментално не се достапни. Обидете се повторно за неколку секунди.
+                    {{ t('contracts.table.errorDesc') }}
                   </p>
                 </div>
 
@@ -297,7 +302,7 @@ const isNumericColumn = (id: string) => numericColumnIds.includes(id);
                   class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
                   @click="emit('retry')"
                 >
-                  Обиди се повторно
+                  {{ t('actions.retry') }}
                 </button>
               </div>
             </td>
@@ -305,13 +310,13 @@ const isNumericColumn = (id: string) => numericColumnIds.includes(id);
 
           <tr v-else-if="isLoading && rows.length === 0">
             <td colspan="7" class="px-4 py-8 text-center text-accent">
-              Вчитување...
+              {{ t('common.loading') }}
             </td>
           </tr>
 
           <tr v-else-if="rows.length === 0">
             <td colspan="7" class="px-4 py-8 text-center text-accent">
-              Не се пронајдени договори.
+              {{ t('contracts.table.noResultsTitle') }}
             </td>
           </tr>
 
@@ -367,7 +372,7 @@ const isNumericColumn = (id: string) => numericColumnIds.includes(id);
               colspan="7"
               class="border-t border-muted px-4 py-3 text-center text-xs uppercase tracking-[0.08em] text-tertiary"
             >
-              Се вчитуваат повеќе резултати...
+              {{ t('contracts.table.loadingMore') }}
             </td>
           </tr>
         </tbody>

@@ -9,10 +9,10 @@
           class="page-loader__content"
           role="status"
           aria-live="polite"
-          aria-label="Loading page"
+          :aria-label="t('common.loadingPage')"
         >
           <div class="page-loader__spinner" />
-          <span class="page-loader__label">Се вчитува...</span>
+          <span class="page-loader__label">{{ t('common.loading') }}</span>
         </div>
       </div>
 
@@ -25,12 +25,15 @@
 
 <script setup lang="ts">
 import { provide, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import AppHeader from "../components/AppHeader.vue";
 import {
     type Currency,
     DEFAULT_CURRENCY,
     isCurrency,
 } from "../services/util/currencyConverter";
+
+const { t } = useI18n();
 
 const currentStored =
     typeof window !== "undefined" ? localStorage.getItem("currency") : null;

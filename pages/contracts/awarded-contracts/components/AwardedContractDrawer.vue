@@ -8,6 +8,7 @@ import {
     DocumentEdit24Regular,
 } from "@vicons/fluent";
 import { computed, inject, type Ref } from "vue";
+import { useI18n } from "vue-i18n";
 import AppFooter from "../../../../components/AppFooter.vue";
 import contractsService from "../../../../services/contracts.service";
 import type {
@@ -35,9 +36,11 @@ const emit = defineEmits<{
     close: [];
 }>();
 
+const { t } = useI18n();
+
 const selectedCurrency = inject("selectedCurrency") as Ref<Currency>;
 
-const title = computed(() => props.contract?.subject || "Детали");
+const title = computed(() => props.contract?.subject || t("common.details"));
 
 const formatDate = (value: string | null | undefined) => {
     if (!value) return "—";
@@ -118,12 +121,12 @@ const shouldShowChangesSection = computed(
       >
         <div class="flex items-center justify-between border-b border-muted px-4 py-3">
           <p class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-            Информации за склучениот договор
+            {{ t('contracts.awarded.drawerTitle') }}
           </p>
 
           <button
             class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-background text-accent transition-colors duration-150 hover:bg-secondary hover:text-content"
-            aria-label="Close"
+            :aria-label="t('actions.close')"
             @click="emit('close')"
           >
             <Dismiss24Regular class="h-5 w-5" />
@@ -134,7 +137,7 @@ const shouldShowChangesSection = computed(
           v-if="!contract"
           class="flex flex-1 items-center justify-center px-6 text-center text-sm text-accent"
         >
-          Нема достапни детали.
+          {{ t('contracts.awarded.noDetails') }}
         </div>
 
         <div v-else class="flex min-h-0 flex-1 flex-col">
@@ -148,7 +151,7 @@ const shouldShowChangesSection = computed(
 
                   <div class="min-w-0">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Број на оглас
+                      {{ t('contracts.fields.processNumber') }}
                     </p>
                     <p class="mt-1 truncate text-sm font-semibold text-content sm:text-base">
                       {{ contract.processNumber || "—" }}
@@ -159,7 +162,7 @@ const shouldShowChangesSection = computed(
 
               <div class="shrink-0 text-right">
                 <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                  Датум на објава
+                  {{ t('contracts.fields.postDate') }}
                 </p>
                 <p class="mt-2 text-sm font-medium text-content">
                   {{ formatDate(contract.postDate) }}
@@ -169,7 +172,7 @@ const shouldShowChangesSection = computed(
 
             <div class="mt-5">
               <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                Предмет
+                {{ t('contracts.fields.subject') }}
               </p>
               <h3 class="mt-2 text-xl font-bold leading-tight text-content sm:text-2xl">
                 {{ title }}
@@ -183,7 +186,7 @@ const shouldShowChangesSection = computed(
                 <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div class="border border-muted bg-background p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Институција
+                      {{ t('contracts.fields.institution') }}
                     </p>
 
                     <div class="mt-4 flex items-start gap-3">
@@ -201,7 +204,7 @@ const shouldShowChangesSection = computed(
 
                   <div class="border border-muted bg-background p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Оператор
+                      {{ t('contracts.fields.contractor') }}
                     </p>
 
                     <div class="mt-4 flex items-start gap-3">
@@ -221,7 +224,7 @@ const shouldShowChangesSection = computed(
                 <section class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div class="border border-muted bg-background px-4 py-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Проценета вредност
+                      {{ t('contracts.fields.estimatedValue') }}
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
                         {{ formatCurrency(contract.estimatedContractValue, selectedCurrency) }}
@@ -233,7 +236,7 @@ const shouldShowChangesSection = computed(
                     class="border border-muted bg-background px-4 py-4"
                   >
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Првична вредност
+                      {{ t('contracts.fields.originalValue') }}
                     </p>
                     <p class="mt-3 text-xl font-semibold leading-none text-content">
                         {{ formatCurrency(contract.originalContractValue, selectedCurrency) }}
@@ -245,7 +248,7 @@ const shouldShowChangesSection = computed(
                     :class="showOriginalValue ? 'sm:col-span-2' : ''"
                   >
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Спогодена вредност
+                      {{ t('contracts.fields.assignedValue') }}
                     </p>
                     <p class="mt-3 text-2xl font-bold leading-none text-content">
                         {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
@@ -256,14 +259,14 @@ const shouldShowChangesSection = computed(
                 <section class="border border-muted bg-surface">
                   <div class="border-b border-muted bg-background px-4 py-3">
                     <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                      Дополнителни информации
+                      {{ t('contracts.awarded.additionalInfo') }}
                     </h4>
                   </div>
 
                   <div class="divide-y divide-muted">
                     <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
                       <p class="text-sm font-medium text-content">
-                        Вид на договор
+                        {{ t('contracts.fields.contractType') }}
                       </p>
                       <p class="text-base font-semibold leading-snug text-content">
                         {{ contract.contractType?.name || "—" }}
@@ -272,7 +275,7 @@ const shouldShowChangesSection = computed(
 
                     <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
                       <p class="text-sm font-medium text-content">
-                        Вид на постапка
+                        {{ t('contracts.fields.procedureType') }}
                       </p>
                       <p class="text-base font-semibold leading-snug text-content">
                         {{ contract.procedureType?.name || "—" }}
@@ -281,7 +284,7 @@ const shouldShowChangesSection = computed(
 
                     <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
                       <p class="text-sm font-medium text-content">
-                        Вид на понуда
+                        {{ t('contracts.fields.offerType') }}
                       </p>
                       <p class="text-base font-semibold leading-snug text-content">
                         {{ contract.offerType?.name || "—" }}
@@ -290,7 +293,7 @@ const shouldShowChangesSection = computed(
 
                     <div class="grid gap-2 px-4 py-3 sm:grid-cols-[13rem_minmax(0,1fr)]">
                       <p class="text-sm font-medium text-content">
-                        Вид на рамковен договор
+                        {{ t('contracts.fields.frameworkAgreementType') }}
                       </p>
                       <p class="text-base font-semibold leading-snug text-content">
                         {{ contract.frameworkAgreementType?.name || "—" }}
@@ -305,12 +308,12 @@ const shouldShowChangesSection = computed(
                 >
                   <div class="border-b border-muted bg-background px-4 py-3">
                     <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                      Измени на договорот
+                      {{ t('contracts.awarded.contractChanges') }}
                     </h4>
                   </div>
 
                   <div v-if="isChangesLoading" class="px-4 py-5 text-sm text-accent">
-                    Вчитување измени...
+                    {{ t('common.loading') }}
                   </div>
 
                   <div v-else-if="isChangesError" class="p-4">
@@ -322,10 +325,10 @@ const shouldShowChangesSection = computed(
 
                         <div class="min-w-0 flex-1">
                           <p class="text-sm font-semibold text-content">
-                            Деталите за измените не можеа да бидат вчитани
+                            {{ t('contracts.awarded.errorDetailsLoading') }}
                           </p>
                           <p class="mt-1 text-sm leading-5 text-accent">
-                            Податоците моментално не се достапни. Обидете се повторно.
+                            {{ t('contracts.awarded.dataNotAvailableRetry') }}
                           </p>
                         </div>
 
@@ -333,7 +336,7 @@ const shouldShowChangesSection = computed(
                           class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
                           @click="refetch()"
                         >
-                          Обиди се повторно
+                          {{ t('actions.retry') }}
                         </button>
                       </div>
                     </div>
@@ -347,16 +350,16 @@ const shouldShowChangesSection = computed(
                       <thead class="bg-background">
                         <tr class="border-b border-muted">
                           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                            Причина за промена
+                            {{ t('contracts.fields.changeReason') }}
                           </th>
                           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                            Нова вредност
+                            {{ t('contracts.fields.newValue') }}
                           </th>
                           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                            Разлика
+                            {{ t('contracts.fields.difference') }}
                           </th>
                           <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                            Променет
+                            {{ t('contracts.fields.changedDate') }}
                           </th>
                         </tr>
                       </thead>

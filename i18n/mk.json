@@ -1,0 +1,240 @@
+{
+    "nav": {
+        "dashboard": "Дома",
+        "contracts": "Тендери",
+        "treasury": "Трезор"
+    },
+    "settings": {
+        "theme": "Тема",
+        "currency": "Валута",
+        "language": "Јазик",
+        "light": "Префрли во светол режим",
+        "dark": "Префрли во темен режим"
+    },
+    "actions": {
+        "openMenu": "Отвори мени",
+        "closeMenu": "Затвори мени",
+        "clear": "Исчисти",
+        "closeFilters": "Затвори филтри",
+        "retry": "Обиди се повторно",
+        "close": "Затвори"
+    },
+    "common": {
+        "title": "Економски Статистики",
+        "subtitle": "Јавно достапни податоци, на едно место",
+        "github": "GitHub",
+        "discord": "Discord",
+        "loading": "Се вчитува...",
+        "loadingPage": "Вчитување страница",
+        "filters": "Филтри",
+        "activeFilters": "Активни филтри",
+        "active": "Активни",
+        "selectDate": "Избери датум",
+        "today": "Денес",
+        "total": "Вкупно",
+        "details": "Детали",
+        "noDetailsAvailable": "Нема достапни детали.",
+        "all": "Сите",
+        "yes": "Да",
+        "no": "Не"
+    },
+    "footer": {
+        "repositories": "Репозиториуми",
+        "poweredBy": "Овозможено од"
+    },
+    "error": {
+        "pageNotFound": "Страната не е пронајдена",
+        "pageNotFoundDesc": "Бараната страна не беше пронајдена",
+        "unexpected": "Неочекувана грешка",
+        "unexpectedDesc": "Настана неочекувана грешка"
+    },
+    "home": {
+        "datasetsTitle": "Јавно достапни податоци",
+        "datasetsSubtitle": "Избери област",
+        "contractsTitle": "Јавни Набавки",
+        "contractsDesc": "База на податоци за јавни набавки, договори, јавни институции и економски оператори.",
+        "contractsAction": "Пребарај тендери",
+        "treasuryTitle": "Трезор",
+        "treasuryDesc": "Увид во сите трансакции и исплати од државниот буџет.",
+        "treasuryAction": "Пребарај трансакции",
+        "heroDesc": "Алатка за консолидирање јавно достапни економски и финансиски податоци во Македонија",
+        "viewDatasets": "Погледни податоци",
+        "contributeOnGithub": "Придонеси на GitHub"
+    },
+    "treasury": {
+        "notAvailable": "Делот за трезор сѐ уште не е достапен",
+        "notAvailableDesc": "Оваа страна е во изработка и моментално нема достапна содржина"
+    },
+    "contracts": {
+        "home": {
+            "pageTitle": "Јавни набавки",
+            "pageSubtitle": "Пребарај институции, оператори, склучени договори и реализирани тендери.",
+            "institutions": "Јавни институции",
+            "searchInstitutions": "Пребарај институции",
+            "economicOperators": "Економски оператори",
+            "searchOperators": "Пребарај оператори",
+            "awardedContracts": "Склучени договори",
+            "searchContracts": "Пребарај договори",
+            "realisedTenders": "Реализирани тендери",
+            "searchTenders": "Пребарај тендери"
+        },
+        "tabs": {
+            "institutionsAndContractors": "Институции & Оператори",
+            "awardedContracts": "Склучени договори",
+            "realisedTenders": "Реализирани тендери"
+        },
+        "institutionsAndContractors": {
+            "publicInstitutionsHeading": "Јавни институции",
+            "economicOperatorsHeading": "Економски оператори"
+        },
+        "filters": {
+            "basic": "Основно",
+            "subject": "Предмет",
+            "searchSubject": "Пребарај предмет...",
+            "institution": "Институција",
+            "searchInstitution": "Пребарај институција...",
+            "contractor": "Економски оператор",
+            "searchContractor": "Пребарај оператор...",
+            "types": "Типови",
+            "typeProcedure": "Тип на постапка",
+            "typeOffer": "Тип на понуда",
+            "typeFramework": "Тип на рамковна спогодба",
+            "values": "Вредности и датум",
+            "estimatedValue": "Проценета вредност",
+            "assignedValue": "Спогодена вредност",
+            "dateRange": "Датуми",
+            "dateFrom": "Од датум",
+            "dateTo": "До датум",
+            "publishedFrom": "Објавен од",
+            "publishedTo": "Објавен до",
+            "other": "Останато",
+            "status": "Статус",
+            "numChanges": "Број на измени",
+            "smallContract": "Мал договор",
+            "selectType": "Избери тип",
+            "select": "Избери",
+            "from": "Од",
+            "to": "До",
+            "loadingTypes": "Се вчитуваат типови...",
+            "selectDate": "Избери датум",
+            "today": "Денес"
+        },
+        "fields": {
+            "institution": "Институција",
+            "contractor": "Оператор",
+            "estimatedValue": "Проценета вредност",
+            "originalValue": "Првична вредност",
+            "assignedValue": "Спогодена вредност",
+            "realisedValue": "Реализирана вредност",
+            "paidValue": "Исплатена вредност",
+            "contractType": "Вид на договор",
+            "procedureType": "Вид на постапка",
+            "offerType": "Вид на понуда",
+            "frameworkAgreementType": "Вид на рамковен договор",
+            "changeReason": "Причина за промена",
+            "newValue": "Нова вредност",
+            "difference": "Разлика",
+            "changedDate": "Датум на промена",
+            "processNumber": "Број на оглас",
+            "postDate": "Датум на објава",
+            "subject": "Предмет"
+        },
+        "awarded": {
+            "drawerTitle": "Информации за склучениот договор",
+            "additionalInfo": "Дополнителни информации",
+            "contractChanges": "Измени на договорот",
+            "errorLoadingChanges": "Не успеавме да ги вчитаме измените.",
+            "errorDetailsLoading": "Деталите за измените не можеа да бидат вчитани",
+            "dataNotAvailableRetry": "Податоците моментално не се достапни. Обидете се повторно."
+        },
+        "realised": {
+            "detailsTitle": "Информации за реализираниот тендер",
+            "additionalInfo": "Дополнителни информации"
+        },
+        "institutions": {
+            "table": {
+                "nameHeader": "Име на институција",
+                "spendings": "Расход",
+                "awardedContracts": "Склучени договори",
+                "realisedContracts": "Реализирани тендери",
+                "errorTitle": "Не можевме да ги вчитаме институциите",
+                "errorDesc": "Податоците моментално не се достапни. Обидете се повторно за неколку секунди.",
+                "noResults": "Не се пронајдени институции."
+            },
+            "searchPlaceholder": "Пребарај институција..."
+        },
+        "contractors": {
+            "table": {
+                "nameHeader": "Име на оператор",
+                "earnings": "Приход",
+                "awardedContracts": "Склучени договори",
+                "realisedContracts": "Реализирани тендери",
+                "errorTitle": "Не можевме да ги вчитаме операторите",
+                "errorDesc": "Податоците моментално не се достапни. Обидете се повторно за неколку секунди.",
+                "noResults": "Не се пронајдени оператори."
+            },
+            "searchPlaceholder": "Пребарај оператор..."
+        },
+        "entityDrawer": {
+            "detailsTitle": "Дополнителни информации",
+            "totalSpendings": "Вкупен расход",
+            "totalEarnings": "Вкупен приход",
+            "awardedContracts": "Склучени договори",
+            "realisedContracts": "Реализирани тендери",
+            "contractsTitle": "Договори",
+            "noContracts": "Нема договори.",
+            "contractsLoading": "Вчитување договори...",
+            "errorTitle": "Деталите не можеа да бидат вчитани",
+            "errorDesc": "Податоците моментално не се достапни. Обидете се повторно за неколку секунди.",
+            "latestAwardedContracts": "Најнови склучени договори",
+            "latestRealisedContracts": "Најнови реализирани тендери",
+            "with": "Со",
+            "noAwardedContracts": "Нема достапни склучени договори.",
+            "noRealisedContracts": "Нема достапни реализирани тендери.",
+            "noDetails": "Нема достапни детали."
+        },
+        "table": {
+            "processNumber": "Оглас",
+            "numChanges": "Измени",
+            "publicInstitution": "Јавна институција",
+            "economicOperator": "Економски оператор",
+            "estimatedValue": "Проценета вредност",
+            "originalValue": "Првична вредност",
+            "assignedValue": "Спогодена вредност",
+            "realisedValue": "Реализирана вредност",
+            "paidValue": "Исплатена вредност",
+            "postDate": "Датум на објава",
+            "noResultsTitle": "Нема пронајдено договори",
+            "noResultsDesc": "Обидете се да ги промените филтрите за пребарување.",
+            "errorTitle": "Не успеавме да ги вчитаме договорите",
+            "errorDesc": "Настана грешка при вчитување на податоците.",
+            "loadingMore": "Вчитување повеќе...",
+            "endOfResults": "Нема повеќе резултати"
+        }
+    },
+    "datepicker": {
+        "weekdays": {
+            "mon": "П",
+            "tue": "В",
+            "wed": "С",
+            "thu": "Ч",
+            "fri": "П",
+            "sat": "С",
+            "sun": "Н"
+        },
+        "months": {
+            "jan": "Јануари",
+            "feb": "Февруари",
+            "mar": "Март",
+            "apr": "Април",
+            "may": "Мај",
+            "jun": "Јуни",
+            "jul": "Јули",
+            "aug": "Август",
+            "sep": "Септември",
+            "oct": "Октомври",
+            "nov": "Ноември",
+            "dec": "Декември"
+        }
+    }
+}

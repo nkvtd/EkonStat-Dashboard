@@ -2,8 +2,10 @@
 import { Home24Regular } from "@vicons/fluent";
 import { usePageContext } from "vike-vue/usePageContext";
 import { computed, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 const pageContext = usePageContext();
+const { t } = useI18n();
 const pendingPath = ref<string | null>(null);
 
 const routePath = computed(
@@ -13,13 +15,19 @@ const routePath = computed(
 const activePath = computed(() => pendingPath.value ?? routePath.value);
 
 const tabs = [
-    { label: "", href: "/contracts", icon: Home24Regular },
+    { labelKey: "", href: "/contracts", icon: Home24Regular },
     {
-        label: "Институции & Оператори",
+        labelKey: "contracts.tabs.institutionsAndContractors",
         href: "/contracts/institutions-and-contractors",
     },
-    { label: "Склучени договори", href: "/contracts/awarded-contracts" },
-    { label: "Реализирани тендери", href: "/contracts/realised-contracts" },
+    {
+        labelKey: "contracts.tabs.awardedContracts",
+        href: "/contracts/awarded-contracts",
+    },
+    {
+        labelKey: "contracts.tabs.realisedTenders",
+        href: "/contracts/realised-contracts",
+    },
 ];
 
 watch(routePath, () => {
@@ -63,9 +71,9 @@ const handleTabClick = (href: string) => {
         />
 
         <span
-          v-if="tab.label"
+          v-if="tab.labelKey"
             class="wrap-break-word text-center [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden"        >
-          {{ tab.label }}
+          {{ t(tab.labelKey) }}
         </span>
       </a>
     </div>

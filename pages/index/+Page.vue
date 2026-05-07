@@ -4,9 +4,12 @@ import {
     DocumentCatchUp24Regular,
 } from "@vicons/fluent";
 import { onMounted, onUnmounted } from "vue";
+import { useI18n } from "vue-i18n";
 import AppFooter from "../../components/AppFooter.vue";
 import DatasetCard from "./components/DatasetCard.vue";
 import HeroCard from "./components/HeroCard.vue";
+
+const { t } = useI18n();
 
 const scrollToDatasets = () => {
     document.getElementById("datasets")?.scrollIntoView({
@@ -51,28 +54,28 @@ onUnmounted(() => {
         <div class="px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8 lg:pt-10">
           <div class="mb-6 border-l-4 border-primary pl-4 sm:mb-8 sm:pl-5">
             <h2 class="text-3xl font-bold leading-tight text-content sm:text-4xl">
-              Јавно достапни податоци
+              {{ t('home.datasetsTitle') }}
             </h2>
             <p class="mt-2 text-sm leading-6 text-accent sm:text-base">
-              Избери област
+              {{ t('home.datasetsSubtitle') }}
             </p>
           </div>
 
           <div class="grid grid-cols-1 items-start gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
             <DatasetCard
               :icon="DocumentCatchUp24Regular"
-              title="Јавни Набавки"
-              description="База на податоци за јавни набавки, договори, јавни институции и економски оператори."
+              :title="t('home.contractsTitle')"
+              :description="t('home.contractsDesc')"
               href="/contracts"
-              action-text="Пребарај тендери"
+              :action-text="t('home.contractsAction')"
             />
 
             <DatasetCard
               :icon="BuildingBank24Regular"
-              title="Трезор"
-              description="Увид во сите трансакции и исплати од државниот буџет."
+              :title="t('home.treasuryTitle')"
+              :description="t('home.treasuryDesc')"
               href="/treasury"
-              action-text="Пребарај трансакции"
+              :action-text="t('home.treasuryAction')"
             />
           </div>
         </div>

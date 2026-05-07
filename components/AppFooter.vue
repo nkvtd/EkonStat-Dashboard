@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { LogoGithub } from "@vicons/ionicons5";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 const props = withDefaults(
     defineProps<{
@@ -10,6 +11,8 @@ const props = withDefaults(
         variant: "page",
     },
 );
+
+const { t } = useI18n();
 
 const isDrawer = computed(() => props.variant === "drawer");
 
@@ -28,7 +31,7 @@ const apiRepoHref = "https://github.com/nkvtd/EkonStat-API";
         >
             <div class="flex flex-col items-center justify-center text-center">
                 <nav
-                    aria-label="Репозиториуми"
+                    :aria-label="t('footer.repositories')"
                     class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1"
                 >
                     <a
@@ -56,7 +59,7 @@ const apiRepoHref = "https://github.com/nkvtd/EkonStat-API";
                     class="mt-2 text-sm font-medium leading-5 text-accent sm:text-[15px]"
                     :class="isDrawer ? 'max-w-xs' : 'max-w-md'"
                >
-                    Овозможено од
+                    {{ t('footer.poweredBy') }}
                    <span class="font-semibold text-content">EkonStat-API</span>
                 </p>
             </div>

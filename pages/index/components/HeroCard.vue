@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ChevronDownOutline, LogoGithub } from "@vicons/ionicons5";
+import { useI18n } from "vue-i18n";
 import Logo from "../../../components/Logo.vue";
+
+const { t } = useI18n();
 
 defineProps<{
     githubHref: string;
@@ -24,11 +27,11 @@ const emit = defineEmits<{
         <div class="min-w-0 w-full">
           <div class="mt-2 lg:mt-0 lg:border-l-4 lg:border-primary lg:pl-6">
             <h1 class="text-4xl font-bold leading-none text-content sm:text-5xl lg:text-6xl">
-              Економски Статистики
+              {{ t('common.title') }}
             </h1>
 
             <p class="mx-auto mt-4 max-w-2xl text-base leading-7 text-accent sm:text-lg lg:mx-0">
-              Алатка за консолидирање јавно достапни економски и финансиски податоци во Македонија
+              {{ t('home.heroDesc') }}
             </p>
           </div>
 
@@ -37,7 +40,7 @@ const emit = defineEmits<{
               @click="emit('datasetsClick')"
               class="inline-flex min-h-11.5 items-center justify-center gap-2 border border-primary bg-primary px-5 text-sm font-semibold uppercase tracking-[0.08em] text-black transition-[background-color,color,border-color] duration-240 ease-in-out hover:bg-transparent hover:text-primary sm:px-6"
             >
-              <span>Погледни податоци</span>
+              <span>{{ t('home.viewDatasets') }}</span>
               <ChevronDownOutline class="h-5 w-5" />
             </button>
 
@@ -48,7 +51,7 @@ const emit = defineEmits<{
               class="inline-flex min-h-11.5 items-center justify-center gap-2 border border-muted bg-surface px-5 text-sm font-semibold uppercase tracking-[0.08em] text-content transition-[background-color,color,border-color] duration-240 ease-in-out hover:border-primary hover:text-primary sm:px-6"
             >
               <LogoGithub class="h-5 w-5" />
-              <span>Придонеси на GitHub</span>
+              <span>{{ t('home.contributeOnGithub') }}</span>
             </a>
           </div>
         </div>

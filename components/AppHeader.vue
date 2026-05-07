@@ -10,6 +10,13 @@ import {
 import { LogoDiscord, LogoGithub } from "@vicons/ionicons5";
 import { usePageContext } from "vike-vue/usePageContext";
 import { computed, inject, onMounted, onUnmounted, type Ref, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import {
+    type AppLocale,
+    i18n,
+    loadLocaleMessages,
+    setI18nLanguage,
+} from "../i18n";
 import {
     type Currency,
     DEFAULT_CURRENCY,
@@ -18,6 +25,7 @@ import {
 import Logo from "./Logo.vue";
 
 const pageContext = usePageContext();
+const { t } = useI18n();
 
 const getCurrentPath = () => {
     if (pageContext.urlPathname) return pageContext.urlPathname;
@@ -29,7 +37,7 @@ const routePath = computed(() => getCurrentPath());
 
 const isMobileMenuOpen = ref(false);
 const isDark = ref(false);
-const currentLang = ref("MK");
+const currentLang = computed(() => i18n.global.locale.value as AppLocale);
 const injectedCurrency = inject<Ref<Currency> | null>("selectedCurrency", null);
 const currentCurrency = injectedCurrency ?? ref<Currency>(DEFAULT_CURRENCY);
 
@@ -46,12 +54,12 @@ const isMobileCurrencyDropdownOpen = ref(false);
 const mobileCurrencyDropdownRef = ref<HTMLElement | null>(null);
 
 const navItems = [
-    { label: "Дома", href: "/" },
-    { label: "Тендери", href: "/contracts" },
-    { label: "Трезор", href: "/treasury" },
+    { labelKey: "nav.dashboard", href: "/" },
+    { labelKey: "nav.contracts", href: "/contracts" },
+    { labelKey: "nav.treasury", href: "/treasury" },
 ];
 
-const languages = ["MK", "EN", "AL"];
+const languages: AppLocale[] = ["MK", "EN", "AL"];
 const currencies = ["MKD", "EUR"];
 
 const applyTheme = (dark: boolean) => {
@@ -104,12 +112,15 @@ const toggleMobileCurrencyDropdown = () => {
     }
 };
 
-const setLanguage = (lang: string) => {
-    currentLang.value = lang;
-    localStorage.setItem("lang", lang);
+async function setLanguage(lang: AppLocale) {
+    if (!i18n.global.availableLocales.includes(lang)) {
+        await loadLocaleMessages(lang);
+    }
+
+    setI18nLanguage(lang);
     isLangDropdownOpen.value = false;
     isMobileLangDropdownOpen.value = false;
-};
+}
 
 const setCurrency = (currency: string) => {
     if (isCurrency(currency)) {
@@ -156,7 +167,6 @@ const toggleMobileMenu = () => {
 
 onMounted(() => {
     isDark.value = localStorage.getItem("theme") === "dark";
-    currentLang.value = localStorage.getItem("lang") || "MK";
     const storedCurrency = localStorage.getItem("currency");
     if (storedCurrency && isCurrency(storedCurrency)) {
         currentCurrency.value = storedCurrency;
@@ -198,10 +208,10 @@ const handleNavClick = () => {
 
           <div class="min-w-0 pr-2">
             <h1 class="text-lg font-bold leading-tight text-white sm:text-xl">
-              Економски Статистики
+              {{ t('common.title') }}
             </h1>
             <p class="mt-1 text-sm leading-tight text-white/75">
-              Јавно достапни податоци, на едно место
+              {{ t('common.subtitle') }}
             </p>
           </div>
         </div>
@@ -213,7 +223,7 @@ const handleNavClick = () => {
               target="_blank"
               rel="noopener noreferrer"
               class="flex h-11 w-11 items-center justify-center border-r border-white/15 text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
-              aria-label="GitHub"
+              :aria-label="t('common.github')"
             >
               <LogoGithub class="h-5 w-5" />
             </a>
@@ -223,7 +233,7 @@ const handleNavClick = () => {
               target="_blank"
               rel="noopener noreferrer"
               class="flex h-11 w-11 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/10 hover:text-white"
-              aria-label="Discord"
+              :aria-label="t('common.discord')"
             >
               <LogoDiscord class="h-5 w-5" />
             </a>
@@ -232,7 +242,7 @@ const handleNavClick = () => {
           <button
             @click="toggleMobileMenu"
             class="flex h-11 w-11 items-center justify-center border border-white/15 bg-white/5 text-white/85 transition-colors duration-150 hover:bg-white/10 md:hidden"
-            :aria-label="isMobileMenuOpen ? 'Close menu' : 'Open menu'"
+            :aria-label="isMobileMenuOpen ? t('actions.closeMenu') : t('actions.openMenu')"
           >
             <Navigation24Regular v-if="!isMobileMenuOpen" class="h-6 w-6" />
             <Dismiss24Regular v-else class="h-6 w-6" />
@@ -255,7 +265,7 @@ const handleNavClick = () => {
               : 'hover:bg-white/8 hover:text-white'
           "
         >
-          {{ item.label }}
+          {{ t(item.labelKey) }}
         </a>
       </nav>
 
@@ -263,7 +273,7 @@ const handleNavClick = () => {
         <button
           @click="toggleTheme"
           class="flex min-h-12 items-center gap-2 border-r border-white/15 px-4 text-sm font-medium text-white/80 hover:bg-white/8 hover:text-white"
-          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+          :aria-label="isDark ? t('settings.light') : t('settings.dark')"
         >
           <WeatherSunny24Regular v-if="isDark" class="h-5 w-5" />
           <WeatherMoon24Regular v-else class="h-5 w-5" />
@@ -346,7 +356,7 @@ const handleNavClick = () => {
                 : 'hover:bg-white/8 hover:text-white'
             "
           >
-            {{ item.label }}
+            {{ t(item.labelKey) }}
           </a>
         </nav>
 
@@ -355,7 +365,7 @@ const handleNavClick = () => {
             @click="toggleTheme"
             class="flex min-h-12 items-center justify-between border-b border-white/15 px-4 text-sm font-medium text-white"
           >
-            <span>Тема</span>
+            <span>{{ t('settings.theme') }}</span>
             <span class="flex items-center gap-2 text-white/75">
               <WeatherSunny24Regular v-if="isDark" class="h-5 w-5" />
               <WeatherMoon24Regular v-else class="h-5 w-5" />
@@ -367,7 +377,7 @@ const handleNavClick = () => {
               @click.stop="toggleMobileCurrencyDropdown"
               class="flex min-h-12 w-full items-center justify-between px-4 text-sm font-medium text-white"
             >
-              <span>Валута</span>
+              <span>{{ t('settings.currency') }}</span>
               <span class="flex items-center gap-2 text-white/75">
                 <Money24Regular class="h-5 w-5" />
                 <span>{{ currentCurrency }}</span>
@@ -395,7 +405,7 @@ const handleNavClick = () => {
               @click.stop="toggleMobileLangDropdown"
               class="flex min-h-12 w-full items-center justify-between px-4 text-sm font-medium text-white"
             >
-              <span>Јазик</span>
+              <span>{{ t('settings.language') }}</span>
               <span class="flex items-center gap-2 text-white/75">
                 <Globe24Regular class="h-5 w-5" />
                 <span>{{ currentLang }}</span>
@@ -425,7 +435,7 @@ const handleNavClick = () => {
             target="_blank"
             rel="noopener noreferrer"
             class="flex h-11 flex-1 items-center justify-center border-r border-white/15 text-white/80 transition-colors duration-150 hover:bg-white/8 hover:text-white"
-            aria-label="GitHub"
+            :aria-label="t('common.github')"
           >
             <LogoGithub class="h-5 w-5" />
           </a>
@@ -435,7 +445,7 @@ const handleNavClick = () => {
             target="_blank"
             rel="noopener noreferrer"
             class="flex h-11 flex-1 items-center justify-center text-white/80 transition-colors duration-150 hover:bg-white/8 hover:text-white"
-            aria-label="Discord"
+            :aria-label="t('common.discord')"
           >
             <LogoDiscord class="h-5 w-5" />
           </a>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import type { Component } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 defineProps<{
     icon: Component;
@@ -30,7 +33,7 @@ defineProps<{
     <div class="flex items-end p-4 sm:p-5">
       <div>
         <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-          Вкупно
+          {{ t('common.total') }}
         </p>
 
         <div class="mt-2 text-4xl font-bold leading-none text-content sm:text-5xl">

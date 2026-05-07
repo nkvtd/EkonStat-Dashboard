@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import DatePicker from "../../../../components/ui/DatePicker.vue";
 import FilterDropdown from "../../../../components/ui/FilterDropdown.vue";
 import type { ReferenceDataResponse } from "../../../../services/types/contracts/Response.types";
+
+const { t } = useI18n();
 
 export type AwardedFilterForm = {
     subject: string;
@@ -63,7 +66,7 @@ const toggleSection = (key: keyof typeof sections.value) => {
 };
 
 const createOptions = (source?: Record<string, string>) => [
-    { label: "Сите", value: "" },
+    { label: t("common.all"), value: "" },
     ...Object.entries(source ?? {}).map(([value, label]) => ({
         value,
         label,
@@ -82,10 +85,10 @@ const frameworkOptions = computed(() =>
     createOptions(props.referenceData?.frameworkAgreementTypes),
 );
 
-const smallContractOptions = [
-    { label: "Да", value: "true" },
-    { label: "Не", value: "false" },
-];
+const smallContractOptions = computed(() => [
+    { label: t("common.yes"), value: "true" },
+    { label: t("common.no"), value: "false" },
+]);
 
 const wrapperClass = computed(() =>
     props.embedded
@@ -110,10 +113,10 @@ const valueGroupTitleClass =
       <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
           <h2 class="text-2xl font-bold uppercase tracking-[0.08em] text-content">
-            Филтри
+            {{ t('common.filters') }}
           </h2>
           <p class="mt-1 text-xs uppercase tracking-[0.08em] text-tertiary">
-            {{ activeCount ?? 0 }} активни
+            {{ activeCount ?? 0 }} {{ t('common.activeFilters').toLowerCase() }}
           </p>
         </div>
 
@@ -122,7 +125,7 @@ const valueGroupTitleClass =
           class="shrink-0 border border-muted bg-background px-3 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-accent transition-colors duration-150 hover:bg-secondary hover:text-content"
           @click="emit('reset')"
         >
-          Исчисти
+          {{ t('actions.clear') }}
         </button>
       </div>
     </div>
@@ -130,40 +133,40 @@ const valueGroupTitleClass =
     <div class="min-h-0 flex-1 overflow-y-auto">
       <section :class="sectionBorderClass">
         <button type="button" :class="sectionButtonClass" @click="toggleSection('text')">
-          <span>Основно</span>
+          <span>{{ t('contracts.filters.basic') }}</span>
           <span>{{ sections.text ? "−" : "+" }}</span>
         </button>
 
         <div v-if="sections.text" class="space-y-3 p-4">
           <div>
-            <label :class="labelClass">Предмет</label>
+            <label :class="labelClass">{{ t('contracts.filters.subject') }}</label>
             <input
               :value="modelValue.subject"
               type="text"
               :class="inputClass"
-              placeholder="Пребарај предмет..."
+              :placeholder="t('contracts.filters.searchSubject')"
               @input="updateField('subject', ($event.target as HTMLInputElement).value)"
             />
           </div>
 
           <div>
-            <label :class="labelClass">Институција</label>
+            <label :class="labelClass">{{ t('contracts.filters.institution') }}</label>
             <input
               :value="modelValue.institution"
               type="text"
               :class="inputClass"
-              placeholder="Пребарај институција..."
+              :placeholder="t('contracts.filters.searchInstitution')"
               @input="updateField('institution', ($event.target as HTMLInputElement).value)"
             />
           </div>
 
           <div>
-            <label :class="labelClass">Економски оператор</label>
+            <label :class="labelClass">{{ t('contracts.filters.contractor') }}</label>
             <input
               :value="modelValue.contractor"
               type="text"
               :class="inputClass"
-              placeholder="Пребарај оператор..."
+              :placeholder="t('contracts.filters.searchContractor')"
               @input="updateField('contractor', ($event.target as HTMLInputElement).value)"
             />
           </div>
@@ -172,60 +175,60 @@ const valueGroupTitleClass =
 
       <section :class="sectionBorderClass">
         <button type="button" :class="sectionButtonClass" @click="toggleSection('types')">
-          <span>Типови</span>
+          <span>{{ t('contracts.filters.types') }}</span>
           <span>{{ sections.types ? "−" : "+" }}</span>
         </button>
 
         <div v-if="sections.types" class="space-y-3 p-4">
           <div>
-            <label :class="labelClass">Тип на постапка</label>
+            <label :class="labelClass">{{ t('contracts.filters.typeProcedure') }}</label>
             <FilterDropdown
               :model-value="modelValue.typeProcedureId"
               :options="procedureOptions"
-              placeholder="Избери тип"
+              :placeholder="t('contracts.filters.selectType')"
               @update:model-value="updateField('typeProcedureId', $event)"
             />
           </div>
 
           <div>
-            <label :class="labelClass">Тип на понуда</label>
+            <label :class="labelClass">{{ t('contracts.filters.typeOffer') }}</label>
             <FilterDropdown
               :model-value="modelValue.typeOfferId"
               :options="offerOptions"
-              placeholder="Избери тип"
+              :placeholder="t('contracts.filters.selectType')"
               @update:model-value="updateField('typeOfferId', $event)"
             />
           </div>
 
           <div>
-            <label :class="labelClass">Рамковна спогодба</label>
+            <label :class="labelClass">{{ t('contracts.filters.typeFramework') }}</label>
             <FilterDropdown
               :model-value="modelValue.typeFrameworkAgreementId"
               :options="frameworkOptions"
-              placeholder="Избери тип"
+              :placeholder="t('contracts.filters.selectType')"
               @update:model-value="updateField('typeFrameworkAgreementId', $event)"
             />
           </div>
 
           <div v-if="isReferenceLoading" class="text-sm text-accent">
-            Се вчитуваат типови...
+            {{ t('contracts.filters.loadingTypes') }}
           </div>
         </div>
       </section>
 
       <section :class="sectionBorderClass">
         <button type="button" :class="sectionButtonClass" @click="toggleSection('value')">
-          <span>Вредности и датум</span>
+          <span>{{ t('contracts.filters.values') }}</span>
           <span>{{ sections.value ? "−" : "+" }}</span>
         </button>
 
         <div v-if="sections.value" class="space-y-4 p-4">
           <div class="space-y-3">
-            <p :class="valueGroupTitleClass">Проценета вредност</p>
+            <p :class="valueGroupTitleClass">{{ t('contracts.filters.estimatedValue') }}</p>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label :class="labelClass">Од</label>
+                <label :class="labelClass">{{ t('contracts.filters.from') }}</label>
                 <input
                   :value="modelValue.moreThanEstimatedValue"
                   type="number"
@@ -236,7 +239,7 @@ const valueGroupTitleClass =
               </div>
 
               <div>
-                <label :class="labelClass">До</label>
+                <label :class="labelClass">{{ t('contracts.filters.to') }}</label>
                 <input
                   :value="modelValue.lessThanEstimatedValue"
                   type="number"
@@ -249,11 +252,11 @@ const valueGroupTitleClass =
           </div>
 
           <div class="space-y-3">
-            <p :class="valueGroupTitleClass">Спогодена вредност</p>
+            <p :class="valueGroupTitleClass">{{ t('contracts.filters.assignedValue') }}</p>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label :class="labelClass">Од</label>
+                <label :class="labelClass">{{ t('contracts.filters.from') }}</label>
                 <input
                   :value="modelValue.moreThanAssignedValue"
                   type="number"
@@ -264,7 +267,7 @@ const valueGroupTitleClass =
               </div>
 
               <div>
-                <label :class="labelClass">До</label>
+                <label :class="labelClass">{{ t('contracts.filters.to') }}</label>
                 <input
                   :value="modelValue.lessThanAssignedValue"
                   type="number"
@@ -277,10 +280,10 @@ const valueGroupTitleClass =
           </div>
 
           <div>
-            <label :class="labelClass">Објавен од</label>
+            <label :class="labelClass">{{ t('contracts.filters.publishedFrom') }}</label>
             <DatePicker
               :model-value="modelValue.afterPostDate"
-              placeholder="Избери датум"
+              :placeholder="t('contracts.filters.selectDate')"
               :min-year="2000"
               :max-year="currentYear"
               @update:model-value="updateField('afterPostDate', $event)"
@@ -288,10 +291,10 @@ const valueGroupTitleClass =
           </div>
 
           <div>
-            <label :class="labelClass">Објавен до</label>
+            <label :class="labelClass">{{ t('contracts.filters.publishedTo') }}</label>
             <DatePicker
               :model-value="modelValue.beforePostDate"
-              placeholder="Избери датум"
+              :placeholder="t('contracts.filters.selectDate')"
               :min-year="2000"
               :max-year="currentYear"
               @update:model-value="updateField('beforePostDate', $event)"
@@ -302,24 +305,24 @@ const valueGroupTitleClass =
 
       <section>
         <button type="button" :class="sectionButtonClass" @click="toggleSection('flags')">
-          <span>Статус</span>
+          <span>{{ t('contracts.filters.status') }}</span>
           <span>{{ sections.flags ? "−" : "+" }}</span>
         </button>
 
         <div v-if="sections.flags" class="space-y-3 p-4">
           <div>
-            <label :class="labelClass">Мал договор</label>
+            <label :class="labelClass">{{ t('contracts.filters.smallContract') }}</label>
             <FilterDropdown
               :model-value="modelValue.smallContract"
               :options="smallContractOptions"
-              placeholder="Избери"
+              :placeholder="t('contracts.filters.select')"
               empty-value="false"
               @update:model-value="updateField('smallContract', $event as AwardedFilterForm['smallContract'])"
             />
           </div>
 
           <div>
-            <label :class="labelClass">Број на измени</label>
+            <label :class="labelClass">{{ t('contracts.filters.numChanges') }}</label>
             <input
               :value="modelValue.numChanges"
               type="number"

@@ -7,7 +7,11 @@ import {
     DocumentEdit24Regular,
 } from "@vicons/fluent";
 import { computed, inject, type Ref } from "vue";
+import { useI18n } from "vue-i18n";
 import AppFooter from "../../../../components/AppFooter.vue";
+
+const { t } = useI18n();
+
 import contractsService from "../../../../services/contracts.service";
 import type {
     AwardedContractItem,
@@ -105,10 +109,14 @@ const money = computed(() => {
 });
 
 const moneyLabel = computed(() =>
-    isInstitution.value ? "Вкупен расход" : "Вкупен приход",
+    isInstitution.value
+        ? t("contracts.entityDrawer.totalSpendings")
+        : t("contracts.entityDrawer.totalEarnings"),
 );
 
-const entityName = computed(() => details.value?.info?.name || "Детали");
+const entityName = computed(
+    () => details.value?.info?.name || t("common.details"),
+);
 
 const getCounterpartyName = (
     contract: AwardedContractItem | RealisedContractItem,
@@ -151,12 +159,12 @@ const getCounterpartyName = (
       >
         <div class="flex items-center justify-between border-b border-muted px-4 py-3">
           <p class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-            Дополнителни информации
+            {{ t('contracts.entityDrawer.detailsTitle') }}
           </p>
 
           <button
             class="flex h-10 w-10 shrink-0 items-center justify-center border border-muted bg-background text-accent transition-colors duration-150 hover:bg-secondary hover:text-content"
-            aria-label="Close"
+            :aria-label="t('actions.close')"
             @click="emit('close')"
           >
             <Dismiss24Regular class="h-5 w-5" />
@@ -167,7 +175,7 @@ const getCounterpartyName = (
           v-if="isLoading"
           class="flex flex-1 items-center justify-center px-6 text-sm text-accent"
         >
-          Вчитување...
+          {{ t('common.loading') }}
         </div>
 
         <div v-else-if="isError" class="flex flex-1 items-start p-4">
@@ -179,10 +187,10 @@ const getCounterpartyName = (
 
               <div class="min-w-0 flex-1">
                 <p class="text-sm font-semibold text-content">
-                  Деталите не можеа да бидат вчитани
+                  {{ t('contracts.entityDrawer.errorTitle') }}
                 </p>
                 <p class="mt-1 text-sm leading-5 text-accent">
-                  Податоците моментално не се достапни. Обидете се повторно за неколку секунди.
+                  {{ t('contracts.entityDrawer.errorDesc') }}
                 </p>
               </div>
 
@@ -190,7 +198,7 @@ const getCounterpartyName = (
                 class="shrink-0 border border-red-300/70 bg-surface px-3 py-2 text-sm font-medium text-content transition-colors duration-150 hover:bg-red-500/5"
                 @click="refetch()"
               >
-                Обиди се повторно
+                {{ t('actions.retry') }}
               </button>
             </div>
           </div>
@@ -218,7 +226,7 @@ const getCounterpartyName = (
 
                   <div class="border border-muted bg-background p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Склучени договори
+                      {{ t('contracts.entityDrawer.awardedContracts') }}
                     </p>
 
                     <div class="mt-4 flex items-center gap-3">
@@ -234,7 +242,7 @@ const getCounterpartyName = (
 
                   <div class="border border-muted bg-background p-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.08em] text-tertiary">
-                      Реализирани тендери
+                      {{ t('contracts.entityDrawer.realisedContracts') }}
                     </p>
 
                     <div class="mt-4 flex items-center gap-3">
@@ -252,7 +260,7 @@ const getCounterpartyName = (
                 <section class="border border-muted bg-surface">
                   <div class="border-b border-muted bg-background px-4 py-3">
                     <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                      Најнови склучени договори
+                      {{ t('contracts.entityDrawer.latestAwardedContracts') }}
                     </h4>
                   </div>
 
@@ -270,13 +278,13 @@ const getCounterpartyName = (
                         v-if="getCounterpartyName(contract)"
                         class="mt-1 text-sm leading-5 text-accent"
                       >
-                        Со {{ getCounterpartyName(contract) }}
+                        {{ t('contracts.entityDrawer.with') }} {{ getCounterpartyName(contract) }}
                       </p>
 
                       <div class="mt-4 grid gap-3 sm:grid-cols-2">
                         <div class="border border-muted bg-background px-3 py-3">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                            Проценета вредност
+                            {{ t('contracts.fields.estimatedValue') }}
                           </p>
                           <p class="mt-2 text-sm font-medium text-content">
                               {{ formatCurrency(contract.estimatedContractValue, selectedCurrency) }}
@@ -285,7 +293,7 @@ const getCounterpartyName = (
 
                         <div class="border border-muted bg-background px-3 py-3">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                            Спогодена вредност
+                            {{ t('contracts.fields.assignedValue') }}
                           </p>
                           <p class="mt-2 text-sm font-bold text-content">
                               {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
@@ -298,7 +306,7 @@ const getCounterpartyName = (
                       v-if="!details.awarded.length"
                       class="px-4 py-5 text-sm text-accent"
                     >
-                      Нема достапни склучени договори.
+                      {{ t('contracts.entityDrawer.noAwardedContracts') }}
                     </div>
                   </div>
                 </section>
@@ -306,7 +314,7 @@ const getCounterpartyName = (
                 <section class="border border-muted bg-surface">
                   <div class="border-b border-muted bg-background px-4 py-3">
                     <h4 class="text-xs font-semibold uppercase tracking-[0.08em] text-content">
-                      Најнови реализирани тендери
+                      {{ t('contracts.entityDrawer.latestRealisedContracts') }}
                     </h4>
                   </div>
 
@@ -324,14 +332,14 @@ const getCounterpartyName = (
                         v-if="getCounterpartyName(contract)"
                         class="mt-1 text-sm leading-5 text-accent"
                       >
-                        Со {{ getCounterpartyName(contract) }}
+                        {{ t('contracts.entityDrawer.with') }} {{ getCounterpartyName(contract) }}
                       </p>
 
                       <div class="mt-4 grid gap-3">
                         <div class="grid gap-3 sm:grid-cols-2">
                           <div class="border border-muted bg-background px-3 py-3">
                             <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                              Спогодена вредност
+                              {{ t('contracts.fields.assignedValue') }}
                             </p>
                             <p class="mt-2 text-sm font-medium text-content">
                               {{ formatCurrency(contract.assignedContractValue, selectedCurrency) }}
@@ -340,7 +348,7 @@ const getCounterpartyName = (
 
                           <div class="border border-muted bg-background px-3 py-3">
                             <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                              Реализирана вредност
+                              {{ t('contracts.fields.realisedValue') }}
                             </p>
                             <p class="mt-2 text-sm font-medium text-content">
                               {{ formatCurrency(contract.realisedContractValue, selectedCurrency) }}
@@ -350,7 +358,7 @@ const getCounterpartyName = (
 
                         <div class="border border-muted bg-background px-3 py-3">
                           <p class="text-[11px] font-semibold uppercase tracking-[0.08em] text-tertiary">
-                            Исплатена вредност
+                            {{ t('contracts.fields.paidValue') }}
                           </p>
                           <p class="mt-2 text-sm font-bold text-content">
                               {{ formatCurrency(contract.paidContractValue, selectedCurrency) }}
@@ -363,7 +371,7 @@ const getCounterpartyName = (
                       v-if="!details.realised.length"
                       class="px-4 py-5 text-sm text-accent"
                     >
-                      Нема достапни реализирани тендери.
+                      {{ t('contracts.entityDrawer.noRealisedContracts') }}
                     </div>
                   </div>
                 </section>
@@ -378,7 +386,7 @@ const getCounterpartyName = (
           v-else
           class="flex flex-1 items-center justify-center px-6 text-center text-sm text-accent"
         >
-          Нема достапни детали.
+          {{ t('contracts.entityDrawer.noDetails') }}
         </div>
       </aside>
     </Transition>

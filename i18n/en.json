@@ -17,7 +17,8 @@
         "clear": "Clear",
         "closeFilters": "Close filters",
         "retry": "Try again",
-        "close": "Close"
+        "close": "Close",
+        "search": "Search"
     },
     "common": {
         "title": "Economic Statistics",

@@ -431,6 +431,15 @@ const closeMobileFilters = () => {
             @update:model-value="Object.assign(filters, $event)"
             @reset="resetFilters"
           />
+          <div class="border-t border-white/15 p-4">
+            <button
+              type="button"
+              class="flex h-11 w-full items-center justify-center border border-white/15 bg-primary px-4 text-sm font-semibold uppercase tracking-[0.08em] text-black transition-colors duration-150 hover:bg-primary/50 hover:text-white"
+              @click="closeMobileFilters"
+            >
+              {{ t("actions.search") }}
+            </button>
+          </div>
         </aside>
       </Transition>
     </Teleport>

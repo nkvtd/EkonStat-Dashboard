@@ -6,7 +6,16 @@ import {
     Filter24Regular,
     FilterDismiss24Regular,
 } from "@vicons/fluent";
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from "vue";
+import {
+    computed,
+    inject,
+    onMounted,
+    onUnmounted,
+    type Ref,
+    reactive,
+    ref,
+    watch,
+} from "vue";
 import { useI18n } from "vue-i18n";
 import contractsService from "../../../services/contracts.service";
 import type { AwardedContractsQuery } from "../../../services/types/contracts/Query.types";
@@ -14,6 +23,10 @@ import type {
     AwardedContractItem,
     ReferenceDataResponse,
 } from "../../../services/types/contracts/Response.types";
+import {
+    type Currency,
+    convertToMkd,
+} from "../../../services/util/currencyConverter";
 import ContractsSubTabs from "../components/ContractsSubTabs.vue";
 import AwardedContractDrawer from "./components/AwardedContractDrawer.vue";
 import AwardedContractsFilters from "./components/AwardedContractsFilters.vue";
@@ -102,6 +115,15 @@ const toPositiveNumber = (value: string) => {
     return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
 };
 
+const selectedCurrency = inject<Ref<Currency>>("selectedCurrency");
+
+const toMoneyFilterValue = (value: string): number | undefined => {
+    const num = toPositiveNumber(value);
+    return num !== undefined
+        ? convertToMkd(num, selectedCurrency?.value)
+        : undefined;
+};
+
 const pad = (value: number) => String(value).padStart(2, "0");
 
 const getTimezoneOffsetString = (date: Date) => {
@@ -141,16 +163,16 @@ const queryBase = computed<AwardedContractsQuery>(() => {
         typeFrameworkAgreementId: toPositiveNumber(
             debouncedFilters.value.typeFrameworkAgreementId,
         ),
-        moreThanEstimatedValue: toPositiveNumber(
+        moreThanEstimatedValue: toMoneyFilterValue(
             debouncedFilters.value.moreThanEstimatedValue,
         ),
-        lessThanEstimatedValue: toPositiveNumber(
+        lessThanEstimatedValue: toMoneyFilterValue(
             debouncedFilters.value.lessThanEstimatedValue,
         ),
-        moreThanAssignedValue: toPositiveNumber(
+        moreThanAssignedValue: toMoneyFilterValue(
             debouncedFilters.value.moreThanAssignedValue,
         ),
-        lessThanAssignedValue: toPositiveNumber(
+        lessThanAssignedValue: toMoneyFilterValue(
             debouncedFilters.value.lessThanAssignedValue,
         ),
         afterPostDate: toZonedDateTimeString(

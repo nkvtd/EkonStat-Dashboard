@@ -363,10 +363,11 @@ Two display currencies are supported:
 Conversion uses a fixed exchange rate defined in `services/util/currencyConverter.ts` (`MKD_TO_EUR_RATE = 61.5`). The module provides:
 
 - `convertFromMkd()` — converts a MKD amount to the selected currency
+- `convertToMkd()` — reverse-converts an amount from the selected currency back to MKD
 - `formatCurrency()` — formats an amount with locale-aware grouping and the currency suffix
 - `formatSignedCurrencyDifference()` — formats a signed difference value
 
-The selected currency is provided through the root layout via Vue's `provide`/`inject` API and persisted in `localStorage` under the `currency` key.
+The selected currency is provided through the root layout via Vue's `provide`/`inject` API and persisted in `localStorage` under the `currency` key. Money filter inputs are interpreted in the user's selected currency and automatically converted to MKD before querying the API.
 
 ## Environment Variables
 

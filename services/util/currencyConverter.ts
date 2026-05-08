@@ -16,6 +16,19 @@ export const convertFromMkd = (
     return value;
 };
 
+export const convertToMkd = (
+    amount: number | null | undefined,
+    currency: Currency = DEFAULT_CURRENCY,
+): number => {
+    const value = Number(amount ?? 0);
+
+    if (currency === "EUR") {
+        return value * MKD_TO_EUR_RATE;
+    }
+
+    return value;
+};
+
 export const formatCurrency = (
     amount: number | null | undefined,
     currency: Currency = DEFAULT_CURRENCY,

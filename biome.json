@@ -46,6 +46,9 @@
             "correctness": {
                 "noUnusedVariables": "off",
                 "noUnusedImports": "off"
+            },
+            "a11y": {
+                "noSvgWithoutTitle": "off"
             }
         },
         "domains": {

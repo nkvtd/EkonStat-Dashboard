@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronDownOutline, LogoGithub } from "@vicons/ionicons5";
 import { useI18n } from "vue-i18n";
-import Logo from "../../../components/Logo.vue";
+import Logo from "../../../components/AppLogo.vue";
 
 const { t } = useI18n();
 

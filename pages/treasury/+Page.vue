@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import AppFooter from "../../components/AppFooter.vue";
-import Logo from "../../components/Logo.vue";
+import Logo from "../../components/AppLogo.vue";
 
 const { t } = useI18n();
 </script>

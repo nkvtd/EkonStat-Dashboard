@@ -22,7 +22,7 @@ import {
     DEFAULT_CURRENCY,
     isCurrency,
 } from "../services/util/currencyConverter";
-import Logo from "./Logo.vue";
+import Logo from "./AppLogo.vue";
 
 const pageContext = usePageContext();
 const { t } = useI18n();

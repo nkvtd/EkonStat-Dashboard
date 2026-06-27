@@ -1,11 +1,13 @@
 services:
   dashboard:
-    build: .
+    image: ghcr.io/nkvtd/ekonstat-dashboard:latest
     container_name: dashboard
     environment:
       API_UPSTREAM: ${API_UPSTREAM}
     networks:
       - edge-proxy
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
 networks:
   edge-proxy:

@@ -25,7 +25,7 @@
         "@tanstack/vue-table": "^8.21.3",
         "@vicons/fluent": "^0.13.0",
         "axios": "^1.15.2",
-        "vike": "0.4.257",
+        "vike": "0.4.260",
         "vike-vue": "^0.9.11",
         "vue": "^3.5.32",
         "vue-i18n": "^9.14.5"

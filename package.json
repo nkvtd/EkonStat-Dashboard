@@ -28,7 +28,7 @@
         "vike": "0.4.257",
         "vike-vue": "^0.9.11",
         "vue": "^3.5.32",
-        "vue-i18n": "^9.14.5"
+        "vue-i18n": "^11.4.6"
     },
     "devDependencies": {
         "@biomejs/biome": "2.4.11",
